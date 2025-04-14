@@ -1,0 +1,5 @@
+package scian;
+
+class ActiveContoursTest {
+
+}

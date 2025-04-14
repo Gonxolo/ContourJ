@@ -1,0 +1,23 @@
+# This is file includes all the configurations for the plugin.
+# For more details about TOML files please refer to https://toml.io/
+
+[settings.default]
+convergence = { metric = "Average Distance", limit  = 0.5 }
+
+[parameters_naming]
+alpha                    = "Contour Elasticity"
+beta                     = "Contour Stiffness"
+gamma                    = "Contour Viscosity"
+kappa                    = "External Forces Coefficient"
+mu                       = "Regularization Coefficient"
+algorithm_max_iterations = "Active Contours Iteration Limit"
+vector_field_iterations   = "Vector Field Iteration Limit"
+
+[default_values]
+alpha                    = 0.5
+beta                     = 0.5
+gamma                    = 0.5
+kappa                    = 0.5
+mu                       = 0.5
+algorithm_max_iterations = 100
+vector_field_iterations   = 20

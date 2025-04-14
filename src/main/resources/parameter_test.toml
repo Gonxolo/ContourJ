@@ -1,0 +1,13 @@
+# This is a .toml file containing the parameters for ContoursJ
+# For more details about TOML files syntax please refer to https://toml.io/
+
+# Parameters               # Values
+Elasticity                = 0.5
+Rigidity                  = 0.5
+Viscosity                 = 0.5
+"Edge Pull Strength"      = 0.5
+"Smoothness Control"      = 0.5
+"Vector Field Iterations" = 20
+"Maximum Iterations"      = 100
+"Convergence Metric"      = "Average Distance" # If you modify this parameter make sure to keep the double quotes (")
+"Convergence Threshold"   = 0.5
