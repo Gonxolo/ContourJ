@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.scijava</groupId>
         <artifactId>pom-scijava</artifactId>
-        <version>34.0.0</version>
+        <version>34.1.0</version>
         <relativePath/>
     </parent>
 
@@ -120,6 +120,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+            <version>32.0.1-android</version>
         </dependency>
 
     </dependencies>
