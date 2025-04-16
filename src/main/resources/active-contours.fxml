@@ -68,17 +68,17 @@
                               <Font size="10.0" />
                            </font>
                         </Text>
-                        <Text fx:id="annotationMethod" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="from &lt;annotation-method&gt;">
+                        <Text fx:id="annotationMethod" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
                            <font>
                               <Font name="System Bold" size="10.0" />
                            </font>
                         </Text>
-                        <Text fx:id="inputImageSelection" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text=" will be processed for the image ">
+                        <Text fx:id="inputImageSelection" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Text>
-                        <Text fx:id="inputNameSummary" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;image-name&gt;">
+                        <Text fx:id="inputNameSummary" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
                            <font>
                               <Font name="System Bold" size="10.0" />
                            </font>
@@ -88,27 +88,12 @@
                               <Font size="10.0" />
                            </font>
                         </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="The result will be ">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="The expected outputs are: ">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;result&gt;">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text=". ">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Additionally, ">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;aditional-operations&gt;">
+                        <Text fx:id="outputOptionsSummary" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
                            <font>
                               <Font name="System Bold" size="10.0" />
                            </font>
@@ -1897,7 +1882,7 @@
                         <RowConstraints valignment="TOP" vgrow="ALWAYS" />
                         <RowConstraints valignment="TOP" vgrow="ALWAYS" />
                      </rowConstraints>
-                     <CheckBox mnemonicParsing="false" selected="true" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
+                     <CheckBox fx:id="preserveOriginalInputCheckbox" mnemonicParsing="false" selected="true" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -1927,7 +1912,7 @@
                            </tooltip>
                         </Label>
                      </HBox>
-                     <CheckBox layoutX="10.0" layoutY="63.0" mnemonicParsing="false" selected="true" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <CheckBox fx:id="addToRoiManagerCheckbox" layoutX="10.0" layoutY="63.0" mnemonicParsing="false" selected="true" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -1957,7 +1942,7 @@
                            </tooltip>
                         </Label>
                      </HBox>
-                     <CheckBox layoutX="10.0" layoutY="19.0" mnemonicParsing="false" selected="true" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <CheckBox fx:id="preserveOriginalAnnotationsCheckbox" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" selected="true" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -1987,7 +1972,7 @@
                            </tooltip>
                         </Label>
                      </HBox>
-                     <CheckBox layoutX="10.0" layoutY="19.0" mnemonicParsing="false" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                     <CheckBox fx:id="imageWithOverlayCheckbox" layoutX="10.0" layoutY="19.0" mnemonicParsing="false" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                         <cursor>
                            <Cursor fx:constant="HAND" />
                         </cursor>
@@ -2027,7 +2012,7 @@
                            </padding>
                            <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="30.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="5.0" VBox.vgrow="ALWAYS">
                               <HBox alignment="CENTER">
-                                 <CheckBox alignment="CENTER" mnemonicParsing="false" style="-fx-text-fill: #000000;" text=".roi/.zip">
+                                 <CheckBox fx:id="exportRoiZipCheckbox" alignment="CENTER" mnemonicParsing="false" style="-fx-text-fill: #000000;" text=".roi/.zip">
                                     <cursor>
                                        <Cursor fx:constant="HAND" />
                                     </cursor>
@@ -2054,7 +2039,7 @@
                                     </tooltip>
                                  </Label>
                               </HBox>
-                              <CheckBox alignment="CENTER" layoutX="102.0" layoutY="10.0" mnemonicParsing="false" style="-fx-text-fill: #000000;" text=".csv">
+                              <CheckBox fx:id="exportCsvCheckbox" alignment="CENTER" layoutX="102.0" layoutY="10.0" mnemonicParsing="false" style="-fx-text-fill: #000000;" text=".csv">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -2065,7 +2050,7 @@
                                     <Insets bottom="1.0" />
                                  </padding>
                               </CheckBox>
-                              <CheckBox alignment="CENTER" layoutX="153.0" layoutY="10.0" mnemonicParsing="false" style="-fx-text-fill: #000000;" text=".txt">
+                              <CheckBox fx:id="exportTxtCheckbox" alignment="CENTER" layoutX="153.0" layoutY="10.0" mnemonicParsing="false" style="-fx-text-fill: #000000;" text=".txt">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

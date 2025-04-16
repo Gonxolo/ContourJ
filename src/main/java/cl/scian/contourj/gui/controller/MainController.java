@@ -116,6 +116,22 @@ public class MainController implements Initializable {
     @FXML
     private Text inputNameSummary;
     @FXML
+    private Text outputOptionsSummary;
+    @FXML
+    private CheckBox preserveOriginalInputCheckbox;
+    @FXML
+    private CheckBox addToRoiManagerCheckbox;
+    @FXML
+    private CheckBox preserveOriginalAnnotationsCheckbox;
+    @FXML
+    private CheckBox imageWithOverlayCheckbox;
+    @FXML
+    private CheckBox exportRoiZipCheckbox;
+    @FXML
+    private CheckBox exportCsvCheckbox;
+    @FXML
+    private CheckBox exportTxtCheckbox;
+    @FXML
     private ProgressBar statusBar;
     @FXML
     private Label statusText;
@@ -163,6 +179,9 @@ public class MainController implements Initializable {
                         inputSourceTitle, inputSourceWidth, inputSourceHeight,
                         inputSourceDepth, inputSourceFrames, inputSourceChannels,
                         inputSourceBitDepth, inputSourceSource);
+                    
+                    // Update input name in the summary
+                    uiStateManager.updateInputName(newVal.getName());
                 }
             }
         );
@@ -180,6 +199,9 @@ public class MainController implements Initializable {
                         maskTitle, maskWidth, maskHeight,
                         maskDepth, maskFrames, maskChannels,
                         maskBitDepth, maskSource);
+                    
+                    // Update mask name in the summary
+                    uiStateManager.updateMaskName(newVal.getName());
                 }
             }
         );
@@ -203,6 +225,18 @@ public class MainController implements Initializable {
             inputSourceOptions, maskOptions,
             annotationMethod, inputNameSummary, inputImageSelection
         );
+        
+        uiStateManager.setupOutputOptionsSummary(
+            outputOptionsSummary,
+            preserveOriginalInputCheckbox,
+            addToRoiManagerCheckbox,
+            preserveOriginalAnnotationsCheckbox,
+            imageWithOverlayCheckbox,
+            exportRoiZipCheckbox,
+            exportCsvCheckbox,
+            exportTxtCheckbox
+        );
+        
         gvfControlPanel.disableProperty().bind(inputRadio.selectedProperty().not());
     }
 
