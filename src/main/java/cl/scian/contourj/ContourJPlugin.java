@@ -27,6 +27,7 @@
 package cl.scian.contourj;
 
 import org.scijava.command.Command;
+import org.scijava.log.LogLevel;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -53,13 +54,17 @@ public class ContourJPlugin implements Command {
         System.out.println(pack);
         if (pack != null) {
             version = pack.getImplementationVersion();
+            System.out.println(version);
         }
         return version == null ? "DEVELOPMENT" : version;
     }
 
     @Override
     public void run() {
-        log.info("Running " + PLUGIN_NAME + " version " + VERSION);
+        if (VERSION == "DEVELOPMENT") {
+            log.setLevel(LogLevel.DEBUG);
+        }
+        log.debug("Running " + PLUGIN_NAME + " version " + VERSION);
 
         try {
             ContourWorkflow activeContours = new ContourWorkflow(ij.context());

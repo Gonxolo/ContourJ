@@ -50,7 +50,7 @@ public class MainAppFrame extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
-                log.info("Quitting Active Contours... Bye bye !");
+                log.debug("Quitting ContourJ... Bye bye !");
                 SwingUtilities.invokeLater(() -> {
                     setVisible(true);
                     dispose();

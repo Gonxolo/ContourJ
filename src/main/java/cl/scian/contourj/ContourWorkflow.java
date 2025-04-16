@@ -32,8 +32,6 @@ public class ContourWorkflow implements Initializable {
     @Parameter
     private EventService eventService;
 
-    private ImageDisplay sourceImage;
-
     private final ContourAdjuster contourAdjuster;
 
     private Contours initialContours;
@@ -129,23 +127,23 @@ public class ContourWorkflow implements Initializable {
 
         contourAdjuster.setInitialContours(this.initialContours);
 
-        log.info("Pre-adjustment");
-        log.info("Initial Contours:\n");
-        log.info(this.initialContours.info());
+        log.debug("Pre-adjustment");
+        log.debug("Initial Contours:\n");
+        log.debug(this.initialContours.info());
 
-        log.info(contourAdjuster.info());
+        log.debug(contourAdjuster.info());
         contourAdjuster.runAdjustment();
 
         this.adjustedContours = this.contourAdjuster.getAdjustedContours();
 
         this.addContoursToROIManager(this.adjustedContours);
 
-        log.info("Post-adjustment");
-        log.info("Initial Contours:\n");
-        log.info(this.initialContours.info());
-        log.info("Adjusted Contours:\n");
-        log.info(this.adjustedContours.info());
-        log.info(contourAdjuster.info());
+        log.debug("Post-adjustment");
+        log.debug("Initial Contours:\n");
+        log.debug(this.initialContours.info());
+        log.debug("Adjusted Contours:\n");
+        log.debug(this.adjustedContours.info());
+        log.debug(contourAdjuster.info());
 
     }
 

@@ -199,7 +199,7 @@ public class ActiveContours extends AbstractContourAdjuster {
 
             sampledContour.update(adjustedX, adjustedY);
 
-            log.info("Iter: " + i + " | Var: " + variation);
+            log.debug("Iter: " + i + " | Var: " + variation);
 
             if (variation < convergenceThreshold()) return sampledContour;
 
