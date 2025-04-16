@@ -1,6 +1,8 @@
 package cl.scian.contourj.gui.controller;
 
 import cl.scian.contourj.model.ContourAdjustmentParameters;
+import cl.scian.contourj.model.helpers.convergence.metrics.ConvergenceMetric;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextFormatter;
@@ -25,7 +27,8 @@ public class ParameterManager {
                              Spinner<Double> muSpinner,
                              Spinner<Double> convergenceThresholdSpinner,
                              Spinner<Integer> iterationsSpinner,
-                             Spinner<Integer> gvfIterationsSpinner) {
+                             Spinner<Integer> gvfIterationsSpinner,
+                             ComboBox<ConvergenceMetric> convergenceMetricSelector) {
         
         // Alpha
         configureDoubleSpinner(alphaSpinner, 1e-4, 10.0, params.getAlpha(), 1e-4);
@@ -58,6 +61,13 @@ public class ParameterManager {
         // GVF Iterations
         configureIntegerSpinner(gvfIterationsSpinner, 1, (int) 1e3, params.getGVFIterations(), 10);
         gvfIterationsSpinner.getValueFactory().valueProperty().bindBidirectional(params.gvfIterationsProperty());
+
+        // Convergence Metric
+        convergenceMetricSelector.setItems(params.getConvergenceMetrics().getObservableMetrics());
+        convergenceMetricSelector.getSelectionModel().selectedItemProperty().addListener(
+            (obs, oldVal, newVal) -> params.getConvergenceMetrics().setActiveMetric(params.getConvergenceMetrics().getObservableMetrics().indexOf(newVal))
+        );
+        convergenceMetricSelector.getSelectionModel().selectFirst();
     }
 
     private void configureDoubleSpinner(Spinner<Double> spinner, double min, double max, double initialValue, double step) {

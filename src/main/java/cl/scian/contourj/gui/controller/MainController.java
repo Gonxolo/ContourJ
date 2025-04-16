@@ -150,7 +150,6 @@ public class MainController implements Initializable {
         setupImageSelector();
         setupMaskSelector();
         setupParameters();
-        setupConvergenceMetricSelector();
         setupUIBindings();
     }
 
@@ -193,17 +192,9 @@ public class MainController implements Initializable {
             contourWorkflow.parameters(),
             alphaSpinner, betaSpinner, gammaSpinner,
             kappaSpinner, muSpinner, convergenceThresholdSpinner,
-            iterationsSpinner, gvfIterationsSpinner
+            iterationsSpinner, gvfIterationsSpinner,
+            convergenceMetricSelector
         );
-    }
-
-    private void setupConvergenceMetricSelector() {
-        ConvergenceMetrics metrics = contourWorkflow.parameters().getConvergenceMetrics();
-        convergenceMetricSelector.setItems(metrics.getObservableMetrics());
-        convergenceMetricSelector.getSelectionModel().selectedItemProperty().addListener(
-            (obs, oldVal, newVal) -> metrics.setActiveMetric(metrics.getObservableMetrics().indexOf(newVal))
-        );
-        convergenceMetricSelector.getSelectionModel().selectFirst();
     }
 
     private void setupUIBindings() {
