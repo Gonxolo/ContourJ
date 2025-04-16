@@ -24,6 +24,7 @@ import org.scijava.plugin.Parameter;
 
 // import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 // import java.nio.file.Path;
 // import java.nio.file.Paths;
@@ -305,7 +306,20 @@ public class MainController implements Initializable {
 
     @FXML
     public void saveParameters(ActionEvent actionEvent) {
-        log.info("Saving Parameters!");
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter fileExtension = new FileChooser.ExtensionFilter("Save parameters file (.toml)", "*.toml");
+        fileChooser.getExtensionFilters().add(fileExtension);
+        fileChooser.setInitialFileName("contourj_parameters.toml");
+        File parametersFile = fileChooser.showSaveDialog(new Stage());
+        if (parametersFile != null) {
+            try {
+                contourWorkflow.saveParametersToFile(parametersFile);
+                log.info("Parameters successfully saved to: " + parametersFile.getAbsolutePath());
+            } catch (IOException e) {
+                log.error("Error saving parameters: " + e.getMessage());
+                log.warn(e);
+            }
+        }
     }
 
     @FXML
@@ -315,9 +329,13 @@ public class MainController implements Initializable {
         fileChooser.getExtensionFilters().add(fileExtension);
         File parametersFile = fileChooser.showOpenDialog(new Stage());
         if (parametersFile != null) {
-            contourWorkflow.setParametersFromFile(parametersFile);
-        } else {
-            log.info("Incorrect file!");
+            try {
+                contourWorkflow.setParametersFromFile(parametersFile);
+                log.info("Parameters successfully loaded from: " + parametersFile.getAbsolutePath());
+            } catch (IOException e) {
+                log.error("Error loading parameters: " + e.getMessage());
+                log.warn(e);
+            }
         }
     }
 }

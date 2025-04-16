@@ -152,7 +152,7 @@ public class ContourAdjustmentParameters { // TODO: Add missing ASL
         mapDouble(result, "Viscosity", this.gamma);
         mapDouble(result, "Edge Pull Strength", this.kappa);
         mapDouble(result, "Smoothness Control", this.mu);
-        mapDouble(result, "Convergence Threshold", this.mu);
+        mapDouble(result, "Convergence Threshold", this.convergenceThreshold);
 
         mapInteger(result, "Vector Field Iterations", this.gvfIterations);
         mapInteger(result, "Maximum Iterations", this.iterations);
@@ -160,6 +160,24 @@ public class ContourAdjustmentParameters { // TODO: Add missing ASL
         String metricName = result.getString("Convergence Metric");
         if (metricName != null) {
             this.getConvergenceMetrics().setActiveMetric(metricName); // TODO: FIX!!!
+        }
+    }
+
+    public void saveToFile(File parametersFile) throws IOException {
+        String tomlContent = "# ContourJ Parameters\n\n";
+        
+        tomlContent += "\"Elasticity\" = " + this.alpha.get() + "\n";
+        tomlContent += "\"Rigidity\" = " + this.beta.get() + "\n";
+        tomlContent += "\"Viscosity\" = " + this.gamma.get() + "\n";
+        tomlContent += "\"Edge Pull Strength\" = " + this.kappa.get() + "\n";
+        tomlContent += "\"Smoothness Control\" = " + this.mu.get() + "\n";
+        tomlContent += "\"Convergence Threshold\" = " + this.convergenceThreshold.get() + "\n";
+        tomlContent += "\"Vector Field Iterations\" = " + this.gvfIterations.get() + "\n";
+        tomlContent += "\"Maximum Iterations\" = " + this.iterations.get() + "\n";
+        tomlContent += "\"Convergence Metric\" = \"" + this.getConvergenceMetrics().getActiveMetric().getName() + "\"\n";
+
+        try (java.io.FileWriter writer = new java.io.FileWriter(parametersFile)) {
+            writer.write(tomlContent);
         }
     }
 

@@ -171,12 +171,23 @@ public class ContourWorkflow implements Initializable {
 
     }
 
-    public void setParametersFromFile(File parametersFile) {
+    public void setParametersFromFile(File parametersFile) throws IOException {
         try {
             this.parameters().setFromFile(parametersFile);
         } catch (IOException e) {
             log.info("File error");
             log.warn(e);
+            throw e;
+        }
+    }
+    
+    public void saveParametersToFile(File parametersFile) throws IOException {
+        try {
+            this.parameters().saveToFile(parametersFile);
+        } catch (IOException e) {
+            log.info("File save error");
+            log.warn(e);
+            throw e;
         }
     }
 }
