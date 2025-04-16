@@ -250,55 +250,6 @@ public class MainController implements Initializable {
 //        }
 //    }
 
-    private String datasetInfo(Dataset dataset, String datasetName) {
-        String out = "";
-        out += "--- " + datasetName + " INFO ---" + "\n";
-        out += "Title: " + dataset.getName() + "\n";
-        out += "Width (X): " + dataset.getWidth() + "\n";
-        out += "Height (Y): " + dataset.getHeight() + "\n";
-        out += "Depth (Z): " + dataset.getDepth() + "\n";
-        out += "Frames (T): " + dataset.getFrames() + "\n";
-        out += "Channels (C): " + dataset.getChannels() + "\n";
-        out += "Type Label: " + dataset.getTypeLabelLong() + "\n";
-        out += "Source: " + dataset.getSource() + "\n";
-        out += "--- %%%%%%%%%%%%%%%%%%% ---\n";
-        return out;
-    }
-
-    private void displayImageInfo() {
-        Dataset maskDataset = null;
-        Dataset inputSourceDataset = null;
-
-        //log.info("Image Display info");
-
-        try {
-            maskDataset = imds.getActiveDataset(maskSelector.getSelectionModel().getSelectedItem());
-        } catch (NullPointerException e) {
-            log.error("Mask Error");
-            log.error(e);
-        }
-
-        try {
-            inputSourceDataset = imds.getActiveDataset(inputSourceSelector.getSelectionModel().getSelectedItem());
-        } catch (NullPointerException e) {
-            log.error("Input Source Error");
-            log.error(e);
-        }
-
-        if (maskDataset != null) {
-            log.info(this.datasetInfo(maskDataset, "MASK"));
-        } else {
-            log.warn("No mask dataset");
-        }
-
-        if (inputSourceDataset != null) {
-            log.info(this.datasetInfo(inputSourceDataset, "INPUT SOURCE"));
-        } else {
-            log.warn("No input source dataset");
-        }
-
-    }
-
     @FXML
     public void runAlgorithm() {
         uiStateManager.updateRunningState(true, runButton, stopButton, statusBar, statusText);
