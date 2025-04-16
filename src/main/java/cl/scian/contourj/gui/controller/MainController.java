@@ -1,30 +1,26 @@
 package cl.scian.contourj.gui.controller;
 
-
 import cl.scian.contourj.ContourWorkflow;
-
-import cl.scian.contourj.model.ContourAdjustmentParameters;
 import cl.scian.contourj.model.helpers.convergence.metrics.ConvergenceMetric;
 import cl.scian.contourj.model.helpers.convergence.metrics.ConvergenceMetrics;
 
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.concurrent.Task;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.converter.DoubleStringConverter;
+
 import net.imagej.Dataset;
 import net.imagej.display.ImageDisplay;
 import net.imagej.display.ImageDisplayService;
+import net.imagej.display.event.ImageDisplayEvent;
 import org.scijava.Context;
+import org.scijava.event.EventHandler;
+import org.scijava.event.EventService;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 // import org.tomlj.Toml;
@@ -35,15 +31,15 @@ import java.io.File;
 import java.net.URL;
 // import java.nio.file.Path;
 // import java.nio.file.Paths;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ResourceBundle;
-
 
 public class MainController implements Initializable {
 
     @Parameter
     private Context context;
+
+    @Parameter
+    private EventService eventService;
 
     @Parameter
     private LogService log;
@@ -131,11 +127,17 @@ public class MainController implements Initializable {
     private StackPane gvfControlPanel;
 
     private final ContourWorkflow contourWorkflow;
+    private final ImageDisplayManager imageDisplayManager;
+    private final ParameterManager parameterManager;
+    private final UIStateManager uiStateManager;
 
     public MainController(Context context, ContourWorkflow activeContours) {
         context.inject(this);
         this.contourWorkflow = activeContours;
-
+        this.imageDisplayManager = new ImageDisplayManager(imds);
+        this.parameterManager = new ParameterManager(log);
+        this.uiStateManager = new UIStateManager();
+        eventService.subscribe(this);
     }
 
     @Override
@@ -147,278 +149,70 @@ public class MainController implements Initializable {
     public void loadPanes() {
         setupImageSelector();
         setupMaskSelector();
-        bindSpinnersToParameters();
+        setupParameters();
         setupConvergenceMetricSelector();
-        setupSummary();
+        setupUIBindings();
     }
 
     private void setupImageSelector() {
-        // Initialize the ComboBox with current ImageDisplays
-        updateImageDisplaysList(inputSourceSelector);
-
-        inputSourceSelector.showingProperty().addListener((obs, wasShowing, isShowing) -> {
-            if (isShowing) {
-                updateImageDisplaysList(inputSourceSelector);
-            }
-        });
-
+        imageDisplayManager.updateImageDisplaysList(inputSourceSelector);
         inputSourceSelector.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldVal, newVal) -> {
-                    if (newVal != null) {
-                        contourWorkflow.setSourceDisplay(newVal);
-                        updateSourceInfoDisplay();
-                        // log.info("Source Image: " + contourWorkflow.getSourceDisplay());
-                    }
+            (obs, oldVal, newVal) -> {
+                if (newVal != null) {
+                    contourWorkflow.setSourceDisplay(newVal);
+                    imageDisplayManager.updateDatasetInfoDisplay(newVal, 
+                        inputSourceTitle, inputSourceWidth, inputSourceHeight,
+                        inputSourceDepth, inputSourceFrames, inputSourceChannels,
+                        inputSourceBitDepth, inputSourceSource);
                 }
+            }
         );
         inputSourceSelector.getSelectionModel().select(imds.getActiveImageDisplay());
         inputSourceOptions.disableProperty().bind(inputRadio.selectedProperty().not());
         gvfControlPanel.disableProperty().bind(inputRadio.selectedProperty().not());
     }
 
-    /**
-     * Sets up the display of details of the selected image
-     */
-    private void updateSourceInfoDisplay() {
-        // Retrieve active image
-        Dataset dataset = imds.getActiveDataset(inputSourceSelector.getSelectionModel().getSelectedItem());
-
-        // Get and set the name
-        inputSourceTitle.setText(dataset.getName());
-
-        // TODO: Consider calibration
-        // CalibratedAxis X = dataset.axis(0);
-        // CalibratedAxis Y = dataset.axis(1);
-        // CalibratedAxis Z = dataset.axis(2);
-        //dimensionText += X.unit() + "[" + X.type() + "]" + ", " + Y.unit() + "[" + Y.type() + "]";
-
-        // Get and set the width (x) in pixels
-        inputSourceWidth.setText(dataset.getWidth() + " [px]");
-
-        // Get and set the height (y) in pixels
-        inputSourceHeight.setText(dataset.getHeight() + " [px]");
-
-        // Get and set the depth (z)
-        inputSourceDepth.setText(String.valueOf(dataset.getDepth()));
-
-        // Get and set the frames (t)
-        inputSourceFrames.setText(String.valueOf(dataset.getFrames()));
-
-        // Get and set the channels (s)
-        inputSourceChannels.setText(String.valueOf(dataset.getChannels()));
-
-        // Get and set the bit depth
-        inputSourceBitDepth.setText(dataset.getTypeLabelLong());
-
-        // Get and set the source
-        inputSourceSource.setText(dataset.getSource());
-    }
-
     private void setupMaskSelector() {
-        // Initialize the ComboBox with current ImageDisplays
-        updateImageDisplaysList(maskSelector);
-        maskSelector.showingProperty().addListener((obs, wasShowing, isShowing) -> {
-            if (isShowing) {
-                updateImageDisplaysList(maskSelector);
-            }
-        });
-
+        imageDisplayManager.updateImageDisplaysList(maskSelector);
         maskSelector.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldVal, newVal) -> {
-                    if (newVal != null) {
-                        // activeContours.setInitialContours(); // TODO: Pass mask to the setContours method
-                        updateMaskInfoDisplay();
-                        // log.info("Initial contours: " + contourWorkflow.getInitialContours());
-                    }
+            (obs, oldVal, newVal) -> {
+                if (newVal != null) {
+                    imageDisplayManager.updateDatasetInfoDisplay(newVal,
+                        maskTitle, maskWidth, maskHeight,
+                        maskDepth, maskFrames, maskChannels,
+                        maskBitDepth, maskSource);
                 }
+            }
         );
         maskSelector.getSelectionModel().select(imds.getActiveImageDisplay());
         maskOptions.disableProperty().bind(roiRadio.selectedProperty());
     }
 
-    /**
-     * Sets up the display of details of the selected mask
-     */
-    private void updateMaskInfoDisplay() {
-        // Retrieve active image
-        Dataset dataset = imds.getActiveDataset(maskSelector.getSelectionModel().getSelectedItem());
-
-        // Get and set the name
-        maskTitle.setText(dataset.getName());
-
-        // TODO: Consider calibration
-        // CalibratedAxis X = dataset.axis(0);
-        // CalibratedAxis Y = dataset.axis(1);
-        // CalibratedAxis Z = dataset.axis(2);
-        //dimensionText += X.unit() + "[" + X.type() + "]" + ", " + Y.unit() + "[" + Y.type() + "]";
-
-        // Get and set the width (x) in pixels
-        maskWidth.setText(dataset.getWidth() + " [px]");
-
-        // Get and set the height (y) in pixels
-        maskHeight.setText(dataset.getHeight() + " [px]");
-
-        // Get and set the depth (z)
-        maskDepth.setText(String.valueOf(dataset.getDepth()));
-
-        // Get and set the frames (t)
-        maskFrames.setText(String.valueOf(dataset.getFrames()));
-
-        // Get and set the channels (s)
-        maskChannels.setText(String.valueOf(dataset.getChannels()));
-
-        // Get and set the bit depth
-        maskBitDepth.setText(dataset.getTypeLabelLong());
-
-        // Get and set the source
-        maskSource.setText(dataset.getSource());
-    }
-
-    private void updateImageDisplaysList(ComboBox<ImageDisplay> comboBox) {
-        Platform.runLater(() -> {
-            comboBox.setItems(FXCollections.observableList(imds.getImageDisplays()));
-            // log.info("Image displays: " + imds.getImageDisplays()); // TODO: Remove log
-        });
-    }
-
-    // TODO: fix decimal precision
-    // TODO: fix number input (change without pressing enter)
-    // TODO: refactor this method (specifically the max, min, step and default values should be elsewhere)
-    private void bindSpinnersToParameters() {
-        ContourAdjustmentParameters params = this.contourWorkflow.parameters();
-
-        // Alpha
-        configureDoubleSpinner(alphaSpinner, 1e-4, 10.0, params.getAlpha(), 1e-4);
-        alphaSpinner.getValueFactory().valueProperty().bindBidirectional(params.alphaProperty());
-
-        // Beta
-        configureDoubleSpinner(betaSpinner, 1e-4, 10.0, params.getBeta(), 1e-4);
-        betaSpinner.getValueFactory().valueProperty().bindBidirectional(params.betaProperty());
-
-        // Gamma
-        configureDoubleSpinner(gammaSpinner, 1e-4, 10.0, params.getGamma(), 1e-4);
-        gammaSpinner.getValueFactory().valueProperty().bindBidirectional(params.gammaProperty());
-
-        // Kappa
-        configureDoubleSpinner(kappaSpinner, 0.0, 10.0, params.getKappa(), 1e-4);
-        kappaSpinner.getValueFactory().valueProperty().bindBidirectional(params.kappaProperty());
-
-        // Mu
-        configureDoubleSpinner(muSpinner, 1e-4, Double.MAX_VALUE, params.getMu(), 1e-1);
-        muSpinner.getValueFactory().valueProperty().bindBidirectional(params.muProperty());
-
-        // Iter
-        configureIntegerSpinner(iterationsSpinner, 1, (int) 1e5, params.getIterations(), 100);
-        iterationsSpinner.getValueFactory().valueProperty().bindBidirectional(params.iterationsProperty());
-
-        // GVFIter
-        configureIntegerSpinner(gvfIterationsSpinner, 1, (int) 1e3, params.getGVFIterations(), 10);
-        gvfIterationsSpinner.getValueFactory().valueProperty().bindBidirectional(params.gvfIterationsProperty());
-
-        // ConvThresh
-        configureDoubleSpinner(convergenceThresholdSpinner, 1e-2, Double.MAX_VALUE, params.getConvergenceThreshold(), 1e-1);
-        convergenceThresholdSpinner.getValueFactory().valueProperty().bindBidirectional(params.convergenceThresholdProperty());
-    }
-
-    private void configureDoubleSpinner(Spinner<Double> spinner, double min, double max, double initialValue, double step) {
-
-        SpinnerValueFactory.DoubleSpinnerValueFactory factory = new SpinnerValueFactory.DoubleSpinnerValueFactory(min, max, initialValue, step);
-
-        // Set decimal format
-        factory.setConverter(new DoubleStringConverter() {
-            private final DecimalFormat format = new DecimalFormat("0.0###") {
-                @Override
-                public void setMaximumFractionDigits(int newValue) {
-                    super.setMaximumFractionDigits(4);
-                }
-
-                @Override
-                public void setMinimumIntegerDigits(int newValue) {
-                    super.setMinimumIntegerDigits(1);
-                }
-            };
-
-            @Override
-            public String toString(Double value) {
-                return format.format(value);
-            }
-
-            @Override
-            public Double fromString(String string) {
-                try {
-                    return format.parse(string).doubleValue();
-                } catch (ParseException e) {
-                    return 0.0;
-                }
-            }
-        });
-
-        spinner.setValueFactory(factory);
-
-        TextFormatter<Double> textFormatter = new TextFormatter<>(factory.getConverter(), initialValue, change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d+\\.\\d+")) {
-                return change;
-            }
-            return null; // Reject the change if it's not a valid integer
-        });
-
-        spinner.getEditor().setTextFormatter(textFormatter);
-
-        // Enable immediate updates on typing
-        enableImmediateSpinnerUpdates(spinner);
-    }
-
-    private void configureIntegerSpinner(Spinner<Integer> spinner, int min, int max,
-                                         int initialValue, int step) {
-        SpinnerValueFactory.IntegerSpinnerValueFactory factory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, initialValue, step);
-        spinner.setValueFactory(factory);
-
-        // Add a TextFormatter to filter out non-numeric characters
-        TextFormatter<Integer> textFormatter = new TextFormatter<>(factory.getConverter(), initialValue, change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("\\d+")) { // Allow only digits
-                return change;
-            }
-            return null; // Reject the change if it's not a valid integer
-        });
-
-        spinner.getEditor().setTextFormatter(textFormatter);
-
-        // Enable immediate updates on typing
-        enableImmediateSpinnerUpdates(spinner);
-    }
-
-    private <T> void enableImmediateSpinnerUpdates(Spinner<T> spinner) {
-        spinner.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
-            System.out.println(obs);
-            System.out.println(oldValue);
-            System.out.println(newValue);
-            try {
-                String formattedValue = spinner.getValueFactory().getConverter().fromString(newValue).toString();
-                spinner.getValueFactory().setValue(
-                        spinner.getValueFactory().getConverter().fromString(formattedValue)
-                );
-            } catch (NumberFormatException e) {
-                // Ignore invalid input
-            } catch (Exception e) {
-                System.out.println("Error in immediate spinner update");
-                e.printStackTrace();
-            }
-        });
+    private void setupParameters() {
+        parameterManager.bindParameters(
+            contourWorkflow.parameters(),
+            alphaSpinner, betaSpinner, gammaSpinner,
+            kappaSpinner, muSpinner, convergenceThresholdSpinner,
+            iterationsSpinner, gvfIterationsSpinner
+        );
     }
 
     private void setupConvergenceMetricSelector() {
-
-        ConvergenceMetrics metrics = this.contourWorkflow.parameters().getConvergenceMetrics();
+        ConvergenceMetrics metrics = contourWorkflow.parameters().getConvergenceMetrics();
         convergenceMetricSelector.setItems(metrics.getObservableMetrics());
-
-        // Bind selection to active metric
         convergenceMetricSelector.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldVal, newVal) -> metrics.setActiveMetric(metrics.getObservableMetrics().indexOf(newVal))
+            (obs, oldVal, newVal) -> metrics.setActiveMetric(metrics.getObservableMetrics().indexOf(newVal))
         );
         convergenceMetricSelector.getSelectionModel().selectFirst();
+    }
+
+    private void setupUIBindings() {
+        uiStateManager.setupUIBindings(
+            inputRadio, roiRadio,
+            inputSourceOptions, maskOptions,
+            annotationMethod, inputNameSummary, inputImageSelection
+        );
+        gvfControlPanel.disableProperty().bind(inputRadio.selectedProperty().not());
     }
 
 //    private void loadConfig() {
@@ -430,27 +224,6 @@ public class MainController implements Initializable {
 //            throw new RuntimeException(e);
 //        }
 //    }
-
-    private void setupSummary() {
-        annotationMethod.textProperty().bind(
-                Bindings.createStringBinding(() ->
-                        roiRadio.isSelected() ? "from ROI Manager" : "from Mask Image",
-                        roiRadio.selectedProperty()
-                )
-        );
-        inputNameSummary.textProperty().bind(
-                Bindings.createStringBinding(() ->
-                                inputRadio.isSelected() ? "getInputName()" : "(with no image associated)",
-                        inputRadio.selectedProperty()
-                )
-        );
-        inputImageSelection.textProperty().bind(
-                Bindings.createStringBinding(() ->
-                                inputRadio.isSelected() ? " will be processed for the image " : " will be processed ",
-                        inputRadio.selectedProperty()
-                )
-        );
-    }
 
     private String datasetInfo(Dataset dataset, String datasetName) {
         String out = "";
@@ -471,7 +244,7 @@ public class MainController implements Initializable {
         Dataset maskDataset = null;
         Dataset inputSourceDataset = null;
 
-        log.info("Image Display info");
+        //log.info("Image Display info");
 
         try {
             maskDataset = imds.getActiveDataset(maskSelector.getSelectionModel().getSelectedItem());
@@ -501,45 +274,12 @@ public class MainController implements Initializable {
 
     }
 
-    // TODO: runAlgorithm probably should trigger some events
     @FXML
     public void runAlgorithm() {
-        // TODO: Disable Run button (probably should also disable all the other controls (except the summary)
-        // Enable Pause and Stop buttons
-        runButton.setVisible(false);
-        stopButton.setVisible(true);
-
-        statusBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-        statusText.setText("Running...");
-
-        displayImageInfo();
-
-        this.contourWorkflow.initAdjustment();
-
-        delay(2000, this::algorithmDone); // TODO: Remove delay
-
-    }
-
-
-    // TODO: algorithmDone probably should be triggered by an event
-    private void algorithmDone() {
-        runButton.setVisible(true);
-        stopButton.setVisible(false);
-
-        statusBar.setProgress(0.0d);
-        statusText.setText("Run completed successfully! Now ready to run again.");
-    }
-    private static void delay(long millis, Runnable continuation) {
-        Task<Void> sleeper = new Task<Void>() {
-            @Override
-            protected Void call() {
-                try { Thread.sleep(millis); }
-                catch (InterruptedException ignored) { }
-                return null;
-            }
-        };
-        sleeper.setOnSucceeded(event -> continuation.run());
-        new Thread(sleeper).start();
+        uiStateManager.updateRunningState(true, runButton, stopButton, statusBar, statusText);
+        contourWorkflow.initAdjustment();
+        // When algorithm completes:
+        uiStateManager.updateRunningState(false, runButton, stopButton, statusBar, statusText);
     }
 
     @FXML
@@ -549,7 +289,6 @@ public class MainController implements Initializable {
 
     @FXML
     public void loadParameters(ActionEvent actionEvent) {
-        log.info("Loading Parameters!"); // TODO: Add to logs.
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter fileExtension = new FileChooser.ExtensionFilter("Select the parameters file (.toml)", "*.toml");
         fileChooser.getExtensionFilters().add(fileExtension);
@@ -557,8 +296,13 @@ public class MainController implements Initializable {
         if (parametersFile != null) {
             contourWorkflow.setParametersFromFile(parametersFile);
         } else {
-            log.info("Incorrect file!"); // TODO: Add to logs.
+            log.info("Incorrect file!");
         }
     }
 
+    @EventHandler
+    public void onEvent(ImageDisplayEvent event) {
+        imageDisplayManager.updateImageDisplaysList(inputSourceSelector);
+        imageDisplayManager.updateImageDisplaysList(maskSelector);
+    }
 }
