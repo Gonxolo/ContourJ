@@ -36,27 +36,4 @@ public class ImageDisplayManager {
         bitDepth.setText(dataset.getTypeLabelLong());
         source.setText(dataset.getSource());
     }
-
-    public String getDatasetInfo(Dataset dataset, String datasetName) {
-        return String.format("--- %s INFO ---\n" +
-            "Title: %s\n" +
-            "Width (X): %d\n" +
-            "Height (Y): %d\n" +
-            "Depth (Z): %d\n" +
-            "Frames (T): %d\n" +
-            "Channels (C): %d\n" +
-            "Type Label: %s\n" +
-            "Source: %s\n" +
-            "--- %%%%%%%%%%%%%%%%%%% ---\n",
-            datasetName,
-            dataset.getName(),
-            dataset.getWidth(),
-            dataset.getHeight(),
-            dataset.getDepth(),
-            dataset.getFrames(),
-            dataset.getChannels(),
-            dataset.getTypeLabelLong(),
-            dataset.getSource()
-        );
-    }
 } 
