@@ -1,6 +1,6 @@
 package cl.scian.contourj.model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -16,7 +16,7 @@ import net.imglib2.RealPoint;
 
 public final class Contour implements Comparable<Contour> {
 
-    public static Color DEFAULT_COLOR = Color.ORANGE;
+    public static Color DEFAULT_COLOR = Color.CYAN;
     public static int xIndex = 0;
     public static int yIndex = 1;
     private static int idCounter = 0;
