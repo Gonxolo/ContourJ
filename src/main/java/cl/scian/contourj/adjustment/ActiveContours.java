@@ -1,14 +1,18 @@
 package cl.scian.contourj.adjustment;
 
+import cl.scian.contourj.event.ImageNotFoundEvent;
 import cl.scian.contourj.model.*;
 import cl.scian.contourj.model.helpers.convergence.metrics.ConvergenceMetric;
 import cl.scian.contourj.model.helpers.MatrixOps;
 import cl.scian.contourj.model.helpers.Sampling;
 import cl.scian.contourj.model.helpers.interpolation.BilinearInterpolation;
+
 import ij.ImagePlus;
 import net.imagej.Dataset;
 import net.imagej.display.ImageDisplay;
+
 import org.scijava.convert.ConvertService;
+import org.scijava.event.EventService;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -28,8 +32,8 @@ public class ActiveContours extends AbstractContourAdjuster {
     @Parameter
     private ConvertService convertService;
 
-    // @Parameter
-    // private EventService eventService;
+   @Parameter
+   private EventService eventService;
 
     private ImageDisplay sourceDisplay;
 
@@ -121,7 +125,7 @@ public class ActiveContours extends AbstractContourAdjuster {
         try {
             return (Dataset) sourceDisplay.getActiveView().getData();
         } catch (NullPointerException e) {
-            // eventService.publish(new ImageNotFoundEvent());
+            eventService.publish(new ImageNotFoundEvent());
             return null;
         }
     }
