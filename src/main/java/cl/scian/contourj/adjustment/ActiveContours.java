@@ -148,8 +148,15 @@ public class ActiveContours extends AbstractContourAdjuster {
         int currentFrame = contour.getFrame();
         int currentDepth = contour.getDepth();
 
-        double[][] u = this.getVectorFlow(currentFrame, currentDepth).getU(); // TODO: Handle case where no image is given
-        double[][] v = this.getVectorFlow(currentFrame, currentDepth).getV(); // TODO: Handle case where no image is given
+        // Only get vector flow if not using internal forces only
+        double[][] u = null;
+        double[][] v = null;
+        
+        // Only calculate vector flow if we're using external forces
+        if (!parameters().getUseInternalForcesOnly()) {
+            u = this.getVectorFlow(currentFrame, currentDepth).getU();
+            v = this.getVectorFlow(currentFrame, currentDepth).getV();
+        }
 
         Contour sampledContour = arcSample(contour, true); // TODO: Remove hardcoded closeCurve
         int pointsToIterate = sampledContour.numberOfPoints();
@@ -167,17 +174,22 @@ public class ActiveContours extends AbstractContourAdjuster {
 
         for (int i = 1; i <= this.iterations(); i++) {
 
-            double[] vfx = this.kappa() > 0 ?
-                    BilinearInterpolation.interpolate(v, sampledContour.getX(), sampledContour.getY()) :
-                    new double[sampledContour.getX().length];
-            double[] vfy = this.kappa() > 0 ?
-                    BilinearInterpolation.interpolate(u, sampledContour.getX(), sampledContour.getY()) :
-                    new double[sampledContour.getY().length];
-
+            // Set external forces to zero if using internal forces only
+            final double[] vfx;
+            final double[] vfy;
+            
+            // Only apply external forces if not using internal forces only and kappa > 0
+            if (!parameters().getUseInternalForcesOnly() && this.kappa() > 0) {
+                vfx = BilinearInterpolation.interpolate(v, sampledContour.getX(), sampledContour.getY());
+                vfy = BilinearInterpolation.interpolate(u, sampledContour.getX(), sampledContour.getY());
+            } else {
+                vfx = new double[sampledContour.getX().length];
+                vfy = new double[sampledContour.getY().length];
+            }
 
             double[] adjustedX = MatrixOps.matrixMultiplication(invertedAbcMatrix,
                     IntStream.range(0, sampledContour.getX().length)
-                            .mapToDouble(elem -> this.kappa() > 0 ?
+                            .mapToDouble(elem -> this.kappa() > 0 && !parameters().getUseInternalForcesOnly() ?
                                     this.gamma() * sampledContour.getX()[elem] + this.kappa() * vfx[elem] :
                                     this.gamma() * sampledContour.getX()[elem])
                             .toArray()
@@ -185,12 +197,11 @@ public class ActiveContours extends AbstractContourAdjuster {
 
             double[] adjustedY = MatrixOps.matrixMultiplication(invertedAbcMatrix,
                     IntStream.range(0, sampledContour.getY().length)
-                            .mapToDouble(elem -> this.kappa() > 0 ?
+                            .mapToDouble(elem -> this.kappa() > 0 && !parameters().getUseInternalForcesOnly() ?
                                     this.gamma() * sampledContour.getY()[elem] + this.kappa() * vfy[elem] :
                                     this.gamma() * sampledContour.getY()[elem])
                             .toArray()
             );
-
 
             double variation = this.convergenceMetric().calculate(
                     sampledContour,

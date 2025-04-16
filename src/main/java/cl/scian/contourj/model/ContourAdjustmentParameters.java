@@ -23,6 +23,9 @@ public class ContourAdjustmentParameters { // TODO: Add missing ASL
     private final IntegerProperty iterations = new SimpleIntegerProperty(100);
     private final IntegerProperty gvfIterations = new SimpleIntegerProperty(20);
 
+    // Flag to indicate if only internal forces should be used (no GVF/GGVF calculation)
+    private final BooleanProperty useInternalForcesOnly = new SimpleBooleanProperty(false);
+
     private ObjectProperty<ConvergenceMetrics> convergenceMetrics = new SimpleObjectProperty<>(new ConvergenceMetrics());
 
     Map<String, String> parameterDisplayNames = setupParameterDisplayNames();
@@ -116,6 +119,18 @@ public class ContourAdjustmentParameters { // TODO: Add missing ASL
 
     public void setGVFIterations(int value) {
         this.gvfIterations.set(value);
+    }
+
+    public boolean getUseInternalForcesOnly() {
+        return this.useInternalForcesOnly.get();
+    }
+    
+    public BooleanProperty useInternalForcesOnlyProperty() {
+        return this.useInternalForcesOnly;
+    }
+    
+    public void setUseInternalForcesOnly(boolean value) {
+        this.useInternalForcesOnly.set(value);
     }
 
     public ConvergenceMetrics getConvergenceMetrics() {

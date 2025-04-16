@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -21,6 +22,8 @@ import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
 // import org.tomlj.Toml;
 // import org.tomlj.TomlParseResult;
+
+import ij.plugin.frame.RoiManager;
 
 // import java.io.IOException;
 import java.io.File;
@@ -267,6 +270,11 @@ public class MainController implements Initializable {
             exportTxtCheckbox
         );
         
+        // Bind the useInternalForcesOnly property to the inverse of inputRadio.selectedProperty
+        // When inputRadio is NOT selected, we're using internal forces only
+        contourWorkflow.parameters().useInternalForcesOnlyProperty().bind(inputRadio.selectedProperty().not());
+        
+        // Disable GVF panel when using internal forces only
         gvfControlPanel.disableProperty().bind(inputRadio.selectedProperty().not());
     }
 
@@ -282,6 +290,11 @@ public class MainController implements Initializable {
 
     @FXML
     public void runAlgorithm() {
+        // Validate requirements before running
+        if (!validateRequirements()) {
+            return; // Stop execution if validation fails
+        }
+        
         try {
             // Disable image display updates during processing
             imageDisplayManager.setUpdatesEnabled(false);
@@ -302,6 +315,47 @@ public class MainController implements Initializable {
             // Reset UI state
             uiStateManager.updateRunningState(false, runButton, stopButton, statusBar, statusText);
         }
+    }
+    
+    private boolean validateRequirements() {
+        // Check if ROI method is selected but ROI Manager is empty
+        if (roiRadio.isSelected()) {
+            RoiManager rm = RoiManager.getInstance();
+            if (rm == null || rm.getRoisAsArray().length == 0) {
+                showAlert("ROI Manager is empty", 
+                    "You selected to use ROIs from the ROI Manager, but it's empty.\n" +
+                    "Please add ROIs to the ROI Manager before running the algorithm.");
+                return false;
+            }
+        }
+        
+        // Check if mask method is selected but no mask image is given
+        if (!roiRadio.isSelected() && (maskSelector.getSelectionModel().isEmpty() || 
+                                       maskSelector.getSelectionModel().getSelectedItem() == null)) {
+            showAlert("No mask selected", 
+                "You selected to use a mask, but no mask image is selected.\n" +
+                "Please select a mask image before running the algorithm.");
+            return false;
+        }
+        
+        // Check if internal and external forces are selected but no input source is given
+        if (inputRadio.isSelected() && (inputSourceSelector.getSelectionModel().isEmpty() || 
+                                        inputSourceSelector.getSelectionModel().getSelectedItem() == null)) {
+            showAlert("No input source selected", 
+                "You selected to use internal and external forces, but no input image is selected.\n" +
+                "Please select an input image before running the algorithm.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML

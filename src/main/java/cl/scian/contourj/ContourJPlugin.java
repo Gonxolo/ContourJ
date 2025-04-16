@@ -51,19 +51,19 @@ public class ContourJPlugin implements Command {
     private static String version() {
         String version = null;
         final Package pack = ContourJPlugin.class.getPackage();
-        System.out.println(pack);
+        // System.out.println(pack);
         if (pack != null) {
             version = pack.getImplementationVersion();
-            System.out.println(version);
+            // System.out.println(version);
         }
         return version == null ? "DEVELOPMENT" : version;
     }
 
     @Override
     public void run() {
-        if (VERSION == "DEVELOPMENT") {
-            log.setLevel(LogLevel.DEBUG);
-        }
+        //if (VERSION == "DEVELOPMENT") {
+        //    log.setLevel(LogLevel.DEBUG);
+        //}
         log.debug("Running " + PLUGIN_NAME + " version " + VERSION);
 
         try {
@@ -71,7 +71,7 @@ public class ContourJPlugin implements Command {
 
             // Launch JavaFX interface
             MainAppFrame app = new MainAppFrame(ij, activeContours);
-            app.setTitle(PLUGIN_NAME + " version " + VERSION);
+            app.setTitle(PLUGIN_NAME);// + " version " + VERSION);
             app.initialize();
 
         } catch (Exception e) {
