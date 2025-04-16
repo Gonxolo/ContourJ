@@ -54,120 +54,64 @@ public class UIStateManager {
         );
     }
     
+    public void setupOutputOptionsSummary(Text outputOptionsSummary,
+                                      CheckBox preserveOriginalInputCheckbox,
+                                      CheckBox addToRoiManagerCheckbox,
+                                      CheckBox preserveOriginalAnnotationsCheckbox,
+                                      CheckBox imageWithOverlayCheckbox,
+                                      CheckBox exportRoiZipCheckbox,
+                                      CheckBox exportCsvCheckbox,
+                                      CheckBox exportTxtCheckbox) {
+        
+        outputOptionsSummary.textProperty().bind(
+            Bindings.createStringBinding(() -> {
+                StringBuilder sb = new StringBuilder();
+                if (preserveOriginalInputCheckbox.isSelected()) sb.append("Keep original source, ");
+                if (imageWithOverlayCheckbox.isSelected()) sb.append("Image with overlay, ");
+                if (addToRoiManagerCheckbox.isSelected()) sb.append("Add to ROI Manager, ");
+                if (preserveOriginalAnnotationsCheckbox.isSelected()) sb.append("Keep original annotations, ");
+                if (exportRoiZipCheckbox.isSelected()) sb.append("Export to .roi/.zip, ");
+                if (exportCsvCheckbox.isSelected()) sb.append("Export points (.csv), ");
+                if (exportTxtCheckbox.isSelected()) sb.append("Export points (.txt)");
+                
+                return sb.toString();
+            }, preserveOriginalInputCheckbox.selectedProperty(),
+               addToRoiManagerCheckbox.selectedProperty(),
+               preserveOriginalAnnotationsCheckbox.selectedProperty(),
+               imageWithOverlayCheckbox.selectedProperty(),
+               exportRoiZipCheckbox.selectedProperty(),
+               exportCsvCheckbox.selectedProperty(),
+               exportTxtCheckbox.selectedProperty())
+        );
+    }
+    
     public void updateInputName(String name) {
         System.out.println("input name: " + name);
-        inputNameProperty.set((name != null) && (!name.isEmpty()) ? name : "<no-image-selected>");
+        // Always use the placeholder text when name is null or empty
+        if (name == null || name.isEmpty()) {
+            inputNameProperty.set("<no-image-selected>");
+        } else {
+            inputNameProperty.set(name);
+        }
     }
     
     public void updateMaskName(String name) {
         System.out.println("mask name: " + name);
-        maskNameProperty.set((name != null) && (!name.isEmpty()) ? name : "<no-mask-selected>");
-    }
-    
-    public void setupOutputOptionsSummary(
-            Text outputOptionsSummary,
-            CheckBox preserveOriginalInputCheckbox, 
-            CheckBox addToRoiManagerCheckbox,
-            CheckBox preserveOriginalAnnotationsCheckbox,
-            CheckBox imageWithOverlayCheckbox,
-            CheckBox exportRoiZipCheckbox,
-            CheckBox exportCsvCheckbox,
-            CheckBox exportTxtCheckbox) {
-        
-        // Create binding for output options summary
-        StringProperty outputSummaryProperty = new SimpleStringProperty("");
-        
-        // Update the summary whenever any checkbox changes
-        Runnable updateSummary = () -> {
-            StringBuilder sb = new StringBuilder();
-            
-            // Add main output options
-            if (preserveOriginalInputCheckbox.isSelected()) {
-                appendWithComma(sb, "original input source will be preserved");
-            }
-            
-            if (addToRoiManagerCheckbox.isSelected()) {
-                appendWithComma(sb, "resulting contours will be added to the ROI Manager");
-            }
-            
-            if (preserveOriginalAnnotationsCheckbox.isSelected()) {
-                appendWithComma(sb, "original annotations will be preserved");
-            }
-            
-            if (imageWithOverlayCheckbox.isSelected()) {
-                appendWithComma(sb, "an image with overlay of the results will be generated");
-            }
-            
-            // Add export options if any are selected
-            if (exportRoiZipCheckbox.isSelected() || exportCsvCheckbox.isSelected() || exportTxtCheckbox.isSelected()) {
-                String exportFormats = getExportFormats(exportRoiZipCheckbox, exportCsvCheckbox, exportTxtCheckbox);
-                if (!exportFormats.isEmpty()) {
-                    appendWithComma(sb, "the resulting contours exported to " + exportFormats);
-                }
-            }
-            
-            // If no options selected
-            if (sb.length() == 0) {
-                sb.append("no output is expected");
-            }
-            
-            outputSummaryProperty.set(sb.toString());
-        };
-        
-        // Add listeners to all checkboxes
-        preserveOriginalInputCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        addToRoiManagerCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        preserveOriginalAnnotationsCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        imageWithOverlayCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        exportRoiZipCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        exportCsvCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        exportTxtCheckbox.selectedProperty().addListener((obs, oldVal, newVal) -> updateSummary.run());
-        
-        // Initial update
-        updateSummary.run();
-        
-        // Bind the text property
-        outputOptionsSummary.textProperty().bind(outputSummaryProperty);
-    }
-    
-    private void appendWithComma(StringBuilder sb, String text) {
-        if (sb.length() > 0) {
-            sb.append(", ");
-        }
-        sb.append(text);
-    }
-    
-    private String getExportFormats(CheckBox roiZip, CheckBox csv, CheckBox txt) {
-        StringBuilder formats = new StringBuilder();
-        
-        if (roiZip.isSelected()) {
-            formats.append("ROI/ZIP");
-        }
-        
-        if (csv.isSelected()) {
-            if (formats.length() > 0) formats.append(", ");
-            formats.append("CSV");
-        }
-        
-        if (txt.isSelected()) {
-            if (formats.length() > 0) formats.append(", ");
-            formats.append("TXT");
-        }
-        
-        return formats.toString();
-    }
-    
-    public void updateRunningState(boolean isRunning, Button runButton, Button stopButton, 
-                                 ProgressBar statusBar, Label statusText) {
-        runButton.setVisible(!isRunning);
-        stopButton.setVisible(isRunning);
-        
-        if (isRunning) {
-            statusBar.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
-            statusText.setText("Running...");
+        // Always use the placeholder text when name is null or empty
+        if (name == null || name.isEmpty()) {
+            maskNameProperty.set("<no-mask-selected>");
         } else {
-            statusBar.setProgress(0.0);
-            statusText.setText("Run completed successfully! Now ready to run again.");
+            maskNameProperty.set(name);
         }
+    }
+    
+    // Sets the UI elements to the running state
+    public void updateRunningState(boolean isRunning, Button runButton, Button stopButton, 
+                                ProgressBar statusBar, Label statusText) {
+        runButton.setDisable(isRunning);
+        stopButton.setDisable(!isRunning);
+        statusBar.setProgress(isRunning ? -1 : 0);
+        statusBar.setVisible(isRunning);
+        statusText.setText(isRunning ? "Running..." : "Ready");
     }
 } 

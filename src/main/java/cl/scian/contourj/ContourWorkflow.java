@@ -36,11 +36,24 @@ public class ContourWorkflow implements Initializable {
 
     private Contours initialContours;
     private Contours adjustedContours;
+    
+    // Flag to control whether original annotations should be preserved
+    private boolean preserveOriginalAnnotations = false;
 
     public ContourWorkflow(Context context) {
         context.inject(this);
         this.contourAdjuster = new ActiveContours();
         this.contourAdjuster.setContext(context);
+    }
+    
+    // Setter for the preserveOriginalAnnotations flag
+    public void setPreserveOriginalAnnotations(boolean preserve) {
+        this.preserveOriginalAnnotations = preserve;
+    }
+    
+    // Getter for the preserveOriginalAnnotations flag
+    public boolean getPreserveOriginalAnnotations() {
+        return this.preserveOriginalAnnotations;
     }
 
     public ImageDisplay getSourceDisplay() {
@@ -96,6 +109,17 @@ public class ContourWorkflow implements Initializable {
         if (rm == null) {
             rm = RoiManager.getRoiManager();
         }
+        
+        // Only clear existing ROIs if we're not preserving original annotations
+        if (!preserveOriginalAnnotations) {
+            // Clear all existing ROIs to avoid duplication
+            rm.runCommand("Deselect");
+            if (rm.getRoisAsArray().length > 0) {
+                rm.runCommand("Delete");
+            }
+        }
+        
+        // Add all contours at once to minimize events
         for (Contour contour : contours) {
             Roi contourAsRoi = contour.getRoi();
             contourAsRoi.setStrokeColor(contour.getColor()); // TODO: Check better way to handle color

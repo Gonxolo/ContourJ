@@ -2,7 +2,6 @@ package cl.scian.contourj.gui.controller;
 
 import cl.scian.contourj.ContourWorkflow;
 import cl.scian.contourj.model.helpers.convergence.metrics.ConvergenceMetric;
-import cl.scian.contourj.model.helpers.convergence.metrics.ConvergenceMetrics;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,12 +13,9 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import net.imagej.Dataset;
 import net.imagej.display.ImageDisplay;
 import net.imagej.display.ImageDisplayService;
-import net.imagej.display.event.ImageDisplayEvent;
 import org.scijava.Context;
-import org.scijava.event.EventHandler;
 import org.scijava.event.EventService;
 import org.scijava.log.LogService;
 import org.scijava.plugin.Parameter;
@@ -143,36 +139,43 @@ public class MainController implements Initializable {
     private StackPane gvfControlPanel;
 
     private final ContourWorkflow contourWorkflow;
-    private final ImageDisplayManager imageDisplayManager;
+    private ImageDisplayManager imageDisplayManager;
     private final ParameterManager parameterManager;
     private final UIStateManager uiStateManager;
 
     public MainController(Context context, ContourWorkflow activeContours) {
         context.inject(this);
         this.contourWorkflow = activeContours;
-        this.imageDisplayManager = new ImageDisplayManager(imds);
         this.parameterManager = new ParameterManager(log);
         this.uiStateManager = new UIStateManager();
-        eventService.subscribe(this);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // this.loadConfig();
-        // replaceRadioWithToggle();
+        // Initialize will be called by JavaFX after FXML fields are injected
     }
 
     public void loadPanes() {
+        // Create the image display manager now that the UI components exist
+        this.imageDisplayManager = new ImageDisplayManager(imds, inputSourceSelector, maskSelector);
+        context.inject(this.imageDisplayManager);
+        eventService.subscribe(this.imageDisplayManager);
+        this.imageDisplayManager.initialize();
+        
         setupImageSelector();
         setupMaskSelector();
         setupParameters();
         setupUIBindings();
+        
+        // Force an update of the image displays after setting up
+        log.info("Forcing initial update of image displays");
+        imageDisplayManager.updateAllComboBoxes();
     }
 
     private void setupImageSelector() {
-        imageDisplayManager.updateImageDisplaysList(inputSourceSelector);
         inputSourceSelector.getSelectionModel().selectedItemProperty().addListener(
             (obs, oldVal, newVal) -> {
+                log.info("Image selection changed: " + (newVal != null ? newVal.getName() : "null"));
                 if (newVal != null) {
                     contourWorkflow.setSourceDisplay(newVal);
                     imageDisplayManager.updateDatasetInfoDisplay(newVal, 
@@ -182,18 +185,31 @@ public class MainController implements Initializable {
                     
                     // Update input name in the summary
                     uiStateManager.updateInputName(newVal.getName());
+                } else {
+                    // When no image is selected
+                    uiStateManager.updateInputName(null);
                 }
             }
         );
-        inputSourceSelector.getSelectionModel().select(imds.getActiveImageDisplay());
+        
+        // Only select active display if there is one
+        ImageDisplay activeDisplay = imds.getActiveImageDisplay();
+        if (activeDisplay != null) {
+            inputSourceSelector.getSelectionModel().select(activeDisplay);
+        } else {
+            // Make sure nothing is selected to show placeholder
+            inputSourceSelector.getSelectionModel().clearSelection();
+            uiStateManager.updateInputName(null);
+        }
+        
         inputSourceOptions.disableProperty().bind(inputRadio.selectedProperty().not());
         gvfControlPanel.disableProperty().bind(inputRadio.selectedProperty().not());
     }
 
     private void setupMaskSelector() {
-        imageDisplayManager.updateImageDisplaysList(maskSelector);
         maskSelector.getSelectionModel().selectedItemProperty().addListener(
             (obs, oldVal, newVal) -> {
+                log.info("Mask selection changed: " + (newVal != null ? newVal.getName() : "null"));
                 if (newVal != null) {
                     imageDisplayManager.updateDatasetInfoDisplay(newVal,
                         maskTitle, maskWidth, maskHeight,
@@ -202,10 +218,23 @@ public class MainController implements Initializable {
                     
                     // Update mask name in the summary
                     uiStateManager.updateMaskName(newVal.getName());
+                } else {
+                    // When no mask is selected
+                    uiStateManager.updateMaskName(null);
                 }
             }
         );
-        maskSelector.getSelectionModel().select(imds.getActiveImageDisplay());
+        
+        // Only select active display if there is one
+        ImageDisplay activeDisplay = imds.getActiveImageDisplay();
+        if (activeDisplay != null) {
+            maskSelector.getSelectionModel().select(activeDisplay);
+        } else {
+            // Make sure nothing is selected to show placeholder
+            maskSelector.getSelectionModel().clearSelection();
+            uiStateManager.updateMaskName(null);
+        }
+        
         maskOptions.disableProperty().bind(roiRadio.selectedProperty());
     }
 
@@ -252,10 +281,26 @@ public class MainController implements Initializable {
 
     @FXML
     public void runAlgorithm() {
-        uiStateManager.updateRunningState(true, runButton, stopButton, statusBar, statusText);
-        contourWorkflow.initAdjustment();
-        // When algorithm completes:
-        uiStateManager.updateRunningState(false, runButton, stopButton, statusBar, statusText);
+        try {
+            // Disable image display updates during processing
+            imageDisplayManager.setUpdatesEnabled(false);
+            
+            // Update UI to show running state
+            uiStateManager.updateRunningState(true, runButton, stopButton, statusBar, statusText);
+            
+            // Set workflow options from UI
+            contourWorkflow.setPreserveOriginalAnnotations(preserveOriginalAnnotationsCheckbox.isSelected());
+            
+            // Run the adjustment
+            contourWorkflow.initAdjustment();
+            
+        } finally {
+            // Re-enable updates when done (even if an exception occurs)
+            imageDisplayManager.setUpdatesEnabled(true);
+            
+            // Reset UI state
+            uiStateManager.updateRunningState(false, runButton, stopButton, statusBar, statusText);
+        }
     }
 
     @FXML
@@ -274,11 +319,5 @@ public class MainController implements Initializable {
         } else {
             log.info("Incorrect file!");
         }
-    }
-
-    @EventHandler
-    public void onEvent(ImageDisplayEvent event) {
-        imageDisplayManager.updateImageDisplaysList(inputSourceSelector);
-        imageDisplayManager.updateImageDisplaysList(maskSelector);
     }
 }
