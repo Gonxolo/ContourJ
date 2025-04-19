@@ -136,8 +136,6 @@ public class MainController implements Initializable {
     @FXML
     private Label statusText;
     @FXML
-    private Button stopButton;
-    @FXML
     private Button runButton;
     @FXML
     private StackPane gvfControlPanel;
@@ -300,7 +298,7 @@ public class MainController implements Initializable {
             imageDisplayManager.setUpdatesEnabled(false);
             
             // Update UI to show running state
-            uiStateManager.updateRunningState(true, runButton, stopButton, statusBar, statusText);
+            uiStateManager.updateRunningState(true, runButton, statusBar, statusText);
             
             // Set workflow options from UI
             contourWorkflow.setPreserveOriginalAnnotations(preserveOriginalAnnotationsCheckbox.isSelected());
@@ -313,7 +311,7 @@ public class MainController implements Initializable {
             imageDisplayManager.setUpdatesEnabled(true);
             
             // Reset UI state
-            uiStateManager.updateRunningState(false, runButton, stopButton, statusBar, statusText);
+            uiStateManager.updateRunningState(false, runButton, statusBar, statusText);
         }
     }
     

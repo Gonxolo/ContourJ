@@ -106,10 +106,9 @@ public class UIStateManager {
     }
     
     // Sets the UI elements to the running state
-    public void updateRunningState(boolean isRunning, Button runButton, Button stopButton, 
+    public void updateRunningState(boolean isRunning, Button runButton, 
                                 ProgressBar statusBar, Label statusText) {
         runButton.setDisable(isRunning);
-        stopButton.setDisable(!isRunning);
         statusBar.setProgress(isRunning ? -1 : 0);
         statusBar.setVisible(isRunning);
         statusText.setText(isRunning ? "Running..." : "Ready");

@@ -131,20 +131,6 @@
     -fx-background-color: #007a00, #00cc00;
 }
 
-.stop-btn {
-    -fx-background-color: #3d0000, #730000;
-    -fx-background-insets: 0, 2;
-    -fx-background-radius: 3 3 0 0, 2 2 0 0;
-}
-
-.stop-btn:hover {
-    -fx-background-color: #660000, #a30000;
-}
-
-.stop-btn:pressed {
-    -fx-background-color: #290000, #660000;
-}
-
 .spinner-mod {
     -fx-font-size: 12;
     -fx-pref-width: 100;
