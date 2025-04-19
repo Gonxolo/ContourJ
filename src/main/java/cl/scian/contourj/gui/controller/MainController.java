@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -110,14 +109,6 @@ public class MainController implements Initializable {
     @FXML
     private ComboBox<ConvergenceMetric> convergenceMetricSelector;
     @FXML
-    private Text annotationMethod;
-    @FXML
-    private Text inputImageSelection;
-    @FXML
-    private Text inputNameSummary;
-    @FXML
-    private Text outputOptionsSummary;
-    @FXML
     private CheckBox preserveOriginalInputCheckbox;
     @FXML
     private CheckBox addToRoiManagerCheckbox;
@@ -203,8 +194,7 @@ public class MainController implements Initializable {
             inputSourceSelector.getSelectionModel().clearSelection();
             uiStateManager.updateInputName(null);
         }
-        
-        inputSourceOptions.disableProperty().bind(inputRadio.selectedProperty().not());
+
         gvfControlPanel.disableProperty().bind(inputRadio.selectedProperty().not());
     }
 
@@ -236,8 +226,6 @@ public class MainController implements Initializable {
             maskSelector.getSelectionModel().clearSelection();
             uiStateManager.updateMaskName(null);
         }
-        
-        maskOptions.disableProperty().bind(roiRadio.selectedProperty());
     }
 
     private void setupParameters() {
@@ -253,19 +241,7 @@ public class MainController implements Initializable {
     private void setupUIBindings() {
         uiStateManager.setupUIBindings(
             inputRadio, roiRadio,
-            inputSourceOptions, maskOptions,
-            annotationMethod, inputNameSummary, inputImageSelection
-        );
-        
-        uiStateManager.setupOutputOptionsSummary(
-            outputOptionsSummary,
-            preserveOriginalInputCheckbox,
-            addToRoiManagerCheckbox,
-            preserveOriginalAnnotationsCheckbox,
-            imageWithOverlayCheckbox,
-            exportRoiZipCheckbox,
-            exportCsvCheckbox,
-            exportTxtCheckbox
+            inputSourceOptions, maskOptions
         );
         
         // Bind the useInternalForcesOnly property to the inverse of inputRadio.selectedProperty
