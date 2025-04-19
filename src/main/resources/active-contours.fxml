@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
-    <top>
+   <top>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="5.0" />
@@ -38,7 +38,7 @@
                         <padding>
                            <Insets bottom="5.0" left="5.0" right="5.0" top="8.0" />
                         </padding>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Choose where to get the contours from." wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Choose where to get the contours from." wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="11.0" />
                            </font>
@@ -72,22 +72,8 @@
                               </font>
                            </RadioButton>
                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-                              <TextFlow maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
-                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ROI Manager">
-                                    <font>
-                                       <Font name="System Bold" size="11.0" />
-                                    </font>
-                                 </Text>
-                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" (Recommended)">
-                                    <font>
-                                       <Font name="System Italic" size="11.0" />
-                                    </font>
-                                 </Text>
-                              </TextFlow>
-                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Use ROI Manager's content as the contours' annotations." wrapText="true" VBox.vgrow="NEVER">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
+                              <Label styleClass="name" text="Load all contours listed on ROI Manager" />
+                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="description" text="Use ROI Manager's content as the contours' annotations." wrapText="true" VBox.vgrow="NEVER">
                                  <VBox.margin>
                                     <Insets bottom="-1.0" />
                                  </VBox.margin>
@@ -109,7 +95,7 @@
                            </RadioButton>
                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                               <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" spacing="5.0" VBox.vgrow="NEVER">
-                                 <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Mask" HBox.hgrow="NEVER">
+                                 <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" styleClass="name" text="Mask" HBox.hgrow="NEVER">
                                     <font>
                                        <Font name="System Bold" size="11.0" />
                                     </font>
@@ -163,11 +149,7 @@
                                     </HBox.margin>
                                  </Label>
                               </HBox>
-                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Use selected mask as the contours' annotations. " wrapText="true" VBox.vgrow="NEVER">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Label>
+                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="description" text="Use selected mask as the contours' annotations. " wrapText="true" VBox.vgrow="NEVER" />
                               <VBox fx:id="maskOptions" styleClass="inner-section-panel" VBox.vgrow="NEVER">
                                  <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" VBox.vgrow="NEVER">
                                     <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Selected Mask:" HBox.hgrow="ALWAYS">
@@ -381,7 +363,7 @@
                               <Insets left="5.0" right="2.0" />
                            </padding>
                         </Label>
-                        <Label maxHeight="-Infinity" minHeight="-Infinity" styleClass="dual-tag-name" text="Annotations Input Method" HBox.hgrow="NEVER">
+                        <Label maxHeight="-Infinity" minHeight="-Infinity" styleClass="dual-tag-name" text="Contours Input" HBox.hgrow="NEVER">
                            <padding>
                               <Insets left="2.0" right="5.0" />
                            </padding>
@@ -426,7 +408,7 @@
                         <StackPane.margin>
                            <Insets top="8.0" />
                         </StackPane.margin>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Choose the forces that influence contour adjustment" wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Choose the forces that influence contour adjustment" wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="11.0" />
                            </font>
@@ -464,7 +446,7 @@
                            </RadioButton>
                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                               <HBox spacing="5.0" VBox.vgrow="NEVER">
-                                 <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Use Internal Forces only">
+                                 <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" styleClass="name" text="Use Internal Forces only">
                                     <font>
                                        <Font name="System Bold" size="11.0" />
                                     </font>
@@ -504,10 +486,7 @@
                                     </tooltip>
                                  </Label>
                               </HBox>
-                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Consider only the contours for their adjustment." wrapText="true" VBox.vgrow="NEVER">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
+                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="description" text="Consider only the contours for their adjustment." wrapText="true" VBox.vgrow="NEVER">
                                  <padding>
                                     <Insets top="-2.0" />
                                  </padding>
@@ -526,22 +505,13 @@
                            </RadioButton>
                            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                               <HBox spacing="3.0" VBox.vgrow="NEVER">
-                                 <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Use External and Internal Forces" HBox.hgrow="NEVER">
+                                 <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" styleClass="name" text="Use External and Internal Forces" HBox.hgrow="NEVER">
                                     <font>
                                        <Font name="System Bold" size="11.0" />
                                     </font>
                                  </Label>
-                                 <Label contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="(Recommended)" HBox.hgrow="NEVER">
-                                    <font>
-                                       <Font name="System Italic" size="11.0" />
-                                    </font>
-                                 </Label>
                               </HBox>
-                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Consider both contours and image influence for contour adjustment. Requires an image/stack/hyperstack." wrapText="true" VBox.vgrow="NEVER">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Label>
+                              <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="description" text="Consider both contours and image influence for contour adjustment. Requires an image/stack/hyperstack." wrapText="true" VBox.vgrow="NEVER" />
                               <VBox fx:id="inputSourceOptions" styleClass="inner-section-panel" VBox.vgrow="NEVER">
                                  <HBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" VBox.vgrow="NEVER">
                                     <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Selected Source:" HBox.hgrow="ALWAYS">
@@ -793,7 +763,7 @@
                         <padding>
                            <Insets bottom="5.0" left="5.0" right="5.0" top="8.0" />
                         </padding>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="These options modify how the results are presented." wrapText="true" VBox.vgrow="ALWAYS">
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="These options modify how the results are presented." wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="11.0" />
                            </font>
@@ -824,7 +794,7 @@
                               </font>
                            </CheckBox>
                            <HBox alignment="CENTER_LEFT" spacing="5.0" GridPane.columnIndex="1">
-                              <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Preserve original input image">
+                              <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" styleClass="name" text="Preserve original input image">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -854,7 +824,7 @@
                               </font>
                            </CheckBox>
                            <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                              <Label maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Add resulting contours to ROI Manager">
+                              <Label maxWidth="1.7976931348623157E308" styleClass="name" text="Add resulting contours to ROI Manager">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -884,7 +854,7 @@
                               </font>
                            </CheckBox>
                            <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                              <Label maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Preserve original annotations">
+                              <Label maxWidth="1.7976931348623157E308" styleClass="name" text="Preserve original annotations">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -914,7 +884,7 @@
                               </font>
                            </CheckBox>
                            <HBox GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                              <Label maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Image with overlay" wrapText="true">
+                              <Label maxWidth="1.7976931348623157E308" styleClass="name" text="Image with overlay" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1007,7 +977,7 @@
                                     <padding>
                                        <Insets bottom="-1.0" left="5.0" right="3.0" top="-2.0" />
                                     </padding>
-                                    <Label alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" style="-fx-text-fill: #000000;" text="Export results to...">
+                                    <Label alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" text="Export results to...">
                                        <font>
                                           <Font name="System Bold" size="11.0" />
                                        </font>
@@ -1096,7 +1066,7 @@
                                     <Image url="@images/Octicons-playback-play.svg.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Run" HBox.hgrow="NEVER">
+                              <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Run" HBox.hgrow="NEVER">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
@@ -1137,7 +1107,7 @@
                      </opaqueInsets>
                      <children>
                         <ProgressBar fx:id="statusBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.0" StackPane.alignment="CENTER" />
-                        <Label fx:id="statusText" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000; -fx-border-color: #7a7a7a; -fx-border-width: 2; -fx-border-radius: 3; -fx-border-insets: 0 0 1 0;" text="Ready to run!" StackPane.alignment="CENTER">
+                        <Label fx:id="statusText" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: #7a7a7a; -fx-border-width: 2; -fx-border-radius: 3; -fx-border-insets: 0 0 1 0;" text="Ready to run!" StackPane.alignment="CENTER">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -1159,7 +1129,7 @@
                      <Insets bottom="5.0" left="5.0" right="5.0" top="8.0" />
                   </padding>
                   <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="16.0" spacing="3.0" VBox.vgrow="NEVER">
-                     <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Modify how the contours are adjusted." wrapText="true" HBox.hgrow="NEVER">
+                     <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Modify how the contours are adjusted." wrapText="true" HBox.hgrow="NEVER">
                         <font>
                            <Font size="11.0" />
                         </font>
@@ -1218,7 +1188,7 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" valignment="TOP" vgrow="NEVER" />
                            </rowConstraints>
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label fx:id="alphaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Elasticity">
+                              <Label fx:id="alphaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Elasticity">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1259,18 +1229,9 @@
                                  <Insets />
                               </GridPane.margin>
                            </Spinner>
-                           <TextFlow GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-                              <GridPane.margin>
-                                 <Insets />
-                              </GridPane.margin>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How &quot;stretchy&quot; contours are (like a rubber band).">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Text>
-                           </TextFlow>
+                           <Label styleClass="description" text="How &quot;stretchy&quot; contours are (like a rubber band)." GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label fx:id="betaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Rigidity">
+                              <Label fx:id="betaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Rigidity">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1311,18 +1272,9 @@
                                  <Insets />
                               </GridPane.margin>
                            </Spinner>
-                           <TextFlow GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
-                              <GridPane.margin>
-                                 <Insets />
-                              </GridPane.margin>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How &quot;stiff&quot; contour are (like a wire).">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Text>
-                           </TextFlow>
+                           <Label styleClass="description" text="How &quot;stiff&quot; contour are (like a wire)." GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label fx:id="gammaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Viscosity">
+                              <Label fx:id="gammaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Viscosity">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1379,7 +1331,7 @@
                         <padding>
                            <Insets left="10.0" right="10.0" />
                         </padding>
-                        <Label layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" style="-fx-text-fill: #000000;" styleClass="section-name" text="Contours Shape (Internal Forces)">
+                        <Label layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" styleClass="section-name" text="Contours Shape (Internal Forces)">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>
@@ -1430,7 +1382,7 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" valignment="CENTER" vgrow="NEVER" />
                            </rowConstraints>
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label fx:id="kappaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Edge Pull Strength">
+                              <Label fx:id="kappaLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Edge Pull Strength">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1471,13 +1423,9 @@
                                  <Insets />
                               </GridPane.margin>
                            </Spinner>
-                           <Label style="-fx-text-fill: #000000;" text="How strongly contours are &quot;pulled&quot; towards edges." wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
-                              <font>
-                                 <Font size="10.0" />
-                              </font>
-                           </Label>
+                           <Label styleClass="description" text="How strongly contours are &quot;pulled&quot; towards edges." wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label fx:id="muLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Smoothness Control">
+                              <Label fx:id="muLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Smoothness Control">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1518,13 +1466,9 @@
                                  <Insets />
                               </GridPane.margin>
                            </Spinner>
-                           <Label style="-fx-text-fill: #000000;" text="Balances &quot;smoothing noise&quot; vs. &quot;detecting sharp edges&quot;." wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
-                              <font>
-                                 <Font size="10.0" />
-                              </font>
-                           </Label>
+                           <Label styleClass="description" text="Balances &quot;smoothing noise&quot; vs. &quot;detecting sharp edges&quot;." wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Vector Field Iterations">
+                              <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Vector Field Iterations">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1574,7 +1518,7 @@
                         <padding>
                            <Insets left="10.0" right="10.0" />
                         </padding>
-                        <Label layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" style="-fx-text-fill: #000000;" styleClass="section-name" text="Gradient Flow (External Forces)">
+                        <Label layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" styleClass="section-name" text="Gradient Flow (External Forces)">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>
@@ -1623,7 +1567,7 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" valignment="CENTER" vgrow="NEVER" />
                            </rowConstraints>
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Maximum Iterations">
+                              <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Maximum Iterations">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1665,7 +1609,7 @@
                               </GridPane.margin>
                            </Spinner>
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label fx:id="convergenceMetricLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Convergence Metric">
+                              <Label fx:id="convergenceMetricLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Convergence Metric">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1707,7 +1651,7 @@
                               </GridPane.margin>
                            </ComboBox>
                            <HBox spacing="1.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                              <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Convergence Threshold">
+                              <Label contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="name" text="Convergence Threshold">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>
@@ -1757,7 +1701,7 @@
                         <padding>
                            <Insets left="10.0" right="10.0" />
                         </padding>
-                        <Label layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" style="-fx-text-fill: #000000;" styleClass="section-name" text="Stopping Criteria">
+                        <Label layoutX="20.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" styleClass="section-name" text="Stopping Criteria">
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>
@@ -1798,7 +1742,7 @@
                                     </viewport>
                                     <Image url="@images/High-contrast-document-save.svg.png" />
                                  </ImageView>
-                                 <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Save parameters" HBox.hgrow="NEVER">
+                                 <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Save parameters" HBox.hgrow="NEVER">
                                     <font>
                                        <Font name="System Bold" size="11.0" />
                                     </font>
@@ -1831,7 +1775,7 @@
                                     </viewport>
                                     <Image url="@images/Folder-open-solid.svg.png" />
                                  </ImageView>
-                                 <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Load parameters" HBox.hgrow="NEVER">
+                                 <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Load parameters" HBox.hgrow="NEVER">
                                     <font>
                                        <Font name="System Bold" size="11.0" />
                                     </font>
