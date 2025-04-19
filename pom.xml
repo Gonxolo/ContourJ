@@ -13,7 +13,7 @@
 
     <groupId>cl.scian</groupId>
     <artifactId>ContourJ</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0-dev</version>
 
     <name>ContourJ</name>
     <description>A Fiji plugin that provides a GUI for the active contours model (GVF/GGVF snakes).</description>
