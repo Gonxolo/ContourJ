@@ -27,193 +27,6 @@
          <BorderPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="4.0" />
          </BorderPane.margin>
-         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="4.0" VBox.vgrow="ALWAYS">
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity">
-               <effect>
-                  <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
-                     <light>
-                        <Light.Distant azimuth="49.13" elevation="148.44" />
-                     </light>
-                     <bumpInput>
-                        <GaussianBlur radius="20.0" />
-                     </bumpInput>
-                  </Lighting>
-               </effect>
-               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" styleClass="dual-panel-name" HBox.hgrow="NEVER">
-                  <padding>
-                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                  </padding>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-text-fill: #000000;" text="Operations" wrapText="true" VBox.vgrow="NEVER">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-text-fill: #000000;" text="Summary" wrapText="true" VBox.vgrow="NEVER">
-                     <font>
-                        <Font name="System Bold" size="11.0" />
-                     </font>
-                  </Label>
-               </VBox>
-               <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="NEVER">
-                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-radius: 0 3 3 0; -fx-background-radius: 0 5 5 0;" styleClass="info-panel" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
-                     <padding>
-                        <Insets bottom="1.0" left="6.0" right="3.0" top="4.0" />
-                     </padding>
-                     <TextFlow>
-                        <padding>
-                           <Insets bottom="8.0" />
-                        </padding>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="The annotations ">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="annotationMethod" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="inputImageSelection" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="inputNameSummary" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text=". ">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="The expected outputs are: ">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="outputOptionsSummary" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text=". ">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                     </TextFlow>
-                  </ScrollPane>
-               </VBox>
-            </HBox>
-            <VBox HBox.hgrow="NEVER">
-               <StackPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity">
-                  <Button fx:id="stopButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="188.0" snapToPixel="false" styleClass="stop-btn" textAlignment="CENTER" visible="false" StackPane.alignment="CENTER">
-                     <graphic>
-                        <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="5.0">
-                           <ImageView fitHeight="20.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
-                              <viewport>
-                                 <Rectangle2D height="600.0" width="300.0" />
-                              </viewport>
-                              <Image url="@images/Octicons-primitive-square.svg.png" />
-                              <effect>
-                                 <ColorAdjust brightness="1.0" />
-                              </effect>
-                           </ImageView>
-                           <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #ffffff;" text="Force Stop" HBox.hgrow="NEVER">
-                              <font>
-                                 <Font name="System Bold" size="13.0" />
-                              </font>
-                           </Label>
-                        </HBox>
-                     </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <effect>
-                        <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
-                           <bumpInput>
-                              <GaussianBlur radius="20.0" />
-                           </bumpInput>
-                           <light>
-                              <Light.Distant azimuth="49.13" elevation="148.44" />
-                           </light>
-                        </Lighting>
-                     </effect>
-                  </Button>
-                  <Button fx:id="runButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" onAction="#runAlgorithm" prefWidth="188.0" snapToPixel="false" styleClass="run-btn" textAlignment="CENTER" StackPane.alignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <graphic>
-                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
-                           <ImageView fitHeight="20.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
-                              <viewport>
-                                 <Rectangle2D height="600.0" width="300.0" />
-                              </viewport>
-                              <Image url="@images/Octicons-playback-play.svg.png" />
-                           </ImageView>
-                           <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Run" HBox.hgrow="NEVER">
-                              <font>
-                                 <Font name="System Bold" size="13.0" />
-                              </font>
-                           </Label>
-                        </HBox>
-                     </graphic>
-                     <effect>
-                        <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
-                           <bumpInput>
-                              <GaussianBlur radius="20.0" />
-                           </bumpInput>
-                           <light>
-                              <Light.Distant azimuth="49.13" elevation="148.44" />
-                           </light>
-                        </Lighting>
-                     </effect>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Button>
-               </StackPane>
-               <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                  <effect>
-                     <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
-                        <bumpInput>
-                           <GaussianBlur radius="20.0" />
-                        </bumpInput>
-                        <light>
-                           <Light.Distant azimuth="49.13" elevation="148.44" />
-                        </light>
-                     </Lighting>
-                  </effect>
-                  <VBox.margin>
-                     <Insets />
-                  </VBox.margin>
-                  <padding>
-                     <Insets bottom="-1.0" />
-                  </padding>
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
-                  <ProgressBar fx:id="statusBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.0" StackPane.alignment="CENTER" />
-                  <Label fx:id="statusText" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000; -fx-border-color: #7a7a7a; -fx-border-width: 2; -fx-border-radius: 0 0 3 3; -fx-border-insets: 0 0 1 0;" text="Ready to run!" StackPane.alignment="CENTER">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="1.0" />
-                     </padding>
-                     <StackPane.margin>
-                        <Insets />
-                     </StackPane.margin>
-                  </Label>
-               </StackPane>
-            </VBox>
-         </HBox>
       </VBox>
    </bottom>
    <center>
@@ -1025,69 +838,88 @@
                </Label>
             </HBox>
          </StackPane>
-         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="65.0" VBox.vgrow="ALWAYS">
-            <effect>
-               <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
-                  <light>
-                     <Light.Distant azimuth="49.13" elevation="148.44" />
-                  </light>
-                  <bumpInput>
-                     <GaussianBlur radius="20.0" />
-                  </bumpInput>
-               </Lighting>
-            </effect>
-            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="dual-panel-name" HBox.hgrow="NEVER">
-               <padding>
-                  <Insets left="3.0" right="3.0" />
-               </padding>
-               <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-text-fill: #000000;" text="Status" wrapText="true" VBox.vgrow="NEVER">
-                  <font>
-                     <Font name="System Bold" size="11.0" />
-                  </font>
-               </Label>
-               <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-text-fill: #000000;" text="Panel" wrapText="true" VBox.vgrow="NEVER">
-                  <font>
-                     <Font name="System Bold" size="11.0" />
-                  </font>
-               </Label>
-            </VBox>
-            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="NEVER">
-               <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-radius: 0 3 3 0; -fx-background-radius: 0 5 5 0;" styleClass="info-panel" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
-                  <padding>
-                     <Insets bottom="1.0" left="6.0" right="3.0" top="4.0" />
-                  </padding>
-                  <VBox>
-                     <padding>
-                        <Insets bottom="8.0" />
-                     </padding>
-                     <TextFlow>
-                        <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true" translateY="2.5">
-                           <viewport>
-                              <Rectangle2D height="187.0" minX="15.0" minY="27.0" width="211.0" />
-                           </viewport>
-                           <Image url="@images/warning.png" />
-                        </ImageView>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text=" [Warning]">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Text>
-                        <Text fontSmoothingType="LCD" layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Executing this plugin might overwrite the information on the ROI Manager. We recommend you save your work before proceeding.">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                     </TextFlow>
-                     <TextFlow>
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="&gt; In this box we will confirm if everything is in order or will display any warning. Possible warnings: Mask/Image dimensions mismatch; Non-binary masks (or similar); Empty ROI Manager; ROIs in only 1 frame; etc.">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Text>
-                     </TextFlow>
-                  </VBox>
-               </ScrollPane>
-            </VBox>
+         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="4.0">
+            <children>
+               <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                  <children>
+                     <Button fx:id="runButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#runAlgorithm" snapToPixel="false" styleClass="run-btn" textAlignment="CENTER">
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
+                        <graphic>
+                           <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
+                              <children>
+                                 <ImageView fitHeight="20.0" fitWidth="10.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                                    <viewport>
+                                       <Rectangle2D height="600.0" width="300.0" />
+                                    </viewport>
+                                    <image>
+                                       <Image url="@images/Octicons-playback-play.svg.png" />
+                                    </image>
+                                 </ImageView>
+                                 <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000;" text="Run" HBox.hgrow="NEVER">
+                                    <font>
+                                       <Font name="System Bold" size="13.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                           </HBox>
+                        </graphic>
+                        <effect>
+                           <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
+                              <bumpInput>
+                                 <GaussianBlur radius="20.0" />
+                              </bumpInput>
+                              <light>
+                                 <Light.Distant azimuth="49.13" elevation="148.44" />
+                              </light>
+                           </Lighting>
+                        </effect>
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Button>
+                     <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <effect>
+                           <Lighting diffuseConstant="2.0" specularConstant="1.08" specularExponent="31.49" surfaceScale="1.27">
+                              <bumpInput>
+                                 <GaussianBlur radius="20.0" />
+                              </bumpInput>
+                              <light>
+                                 <Light.Distant azimuth="49.13" elevation="148.44" />
+                              </light>
+                           </Lighting>
+                        </effect>
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                        <padding>
+                           <Insets bottom="-1.0" />
+                        </padding>
+                        <opaqueInsets>
+                           <Insets />
+                        </opaqueInsets>
+                        <children>
+                           <ProgressBar fx:id="statusBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.0" StackPane.alignment="CENTER" />
+                           <Label fx:id="statusText" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #000000; -fx-border-color: #7a7a7a; -fx-border-width: 2; -fx-border-radius: 0 0 3 3; -fx-border-insets: 0 0 1 0;" text="Ready to run!" StackPane.alignment="CENTER">
+                              <font>
+                                 <Font size="13.0" />
+                              </font>
+                              <opaqueInsets>
+                                 <Insets />
+                              </opaqueInsets>
+                              <padding>
+                                 <Insets bottom="1.0" />
+                              </padding>
+                              <StackPane.margin>
+                                 <Insets />
+                              </StackPane.margin>
+                           </Label>
+                        </children>
+                     </StackPane>
+                  </children>
+               </VBox>
+            </children>
          </HBox>
       </VBox>
    </center>
