@@ -127,7 +127,11 @@ public class MainController implements Initializable {
     @FXML
     private Label statusText;
     @FXML
+    private ToggleButton toggleOptionalSettings;
+    @FXML
     private Button runButton;
+    @FXML
+    private VBox optionalSettingsPanel;
     @FXML
     private StackPane gvfControlPanel;
 
@@ -241,7 +245,8 @@ public class MainController implements Initializable {
     private void setupUIBindings() {
         uiStateManager.setupUIBindings(
             inputRadio, roiRadio,
-            inputSourceOptions, maskOptions
+            inputSourceOptions, maskOptions,
+            toggleOptionalSettings, optionalSettingsPanel
         );
         
         // Bind the useInternalForcesOnly property to the inverse of inputRadio.selectedProperty

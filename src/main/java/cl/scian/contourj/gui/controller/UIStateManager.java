@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 
 public class UIStateManager {
@@ -14,12 +15,16 @@ public class UIStateManager {
     private StringProperty maskNameProperty = new SimpleStringProperty("<no-mask-selected>");
     
     public void setupUIBindings(RadioButton inputRadio, RadioButton roiRadio,
-                              VBox inputSourceOptions, VBox maskOptions) {
+                              VBox inputSourceOptions, VBox maskOptions,
+                              ToggleButton toggleOptionalSettings, VBox optionalSettingsPanel) {
         // Bind input source options visibility to input radio selection
         inputSourceOptions.disableProperty().bind(inputRadio.selectedProperty().not());
 
         // Bind mask options visibility to ROI manager selection
         maskOptions.disableProperty().bind(roiRadio.selectedProperty());
+
+        // Bind optional settings panel visibility to toggle button selection
+        optionalSettingsPanel.visibleProperty().bind(toggleOptionalSettings.selectedProperty());
     }
     
     public void updateInputName(String name) {
