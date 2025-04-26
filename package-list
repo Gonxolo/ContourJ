@@ -1,0 +1,11 @@
+cl.scian.contourj
+cl.scian.contourj.adjustment
+cl.scian.contourj.event
+cl.scian.contourj.exporter
+cl.scian.contourj.gui
+cl.scian.contourj.gui.controller
+cl.scian.contourj.model
+cl.scian.contourj.model.exceptions
+cl.scian.contourj.model.helpers
+cl.scian.contourj.model.helpers.convergence.metrics
+cl.scian.contourj.model.helpers.interpolation
