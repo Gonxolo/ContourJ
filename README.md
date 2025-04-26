@@ -24,6 +24,7 @@
 </details>
 
 <!-- LICENSE.txt -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
@@ -31,18 +32,18 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 This project was made possible by:
 
-* Funding from **FONDECYT 1221696 (Mauricio Cerda)**
-* Funding from **FONDECYT 3220832 (Jorge Jara)**
+- Funding from **FONDECYT 1221696 (Mauricio Cerda)**
+- Funding from **FONDECYT 3220832 (Jorge Jara)**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/Gonxolo/ContourJ.svg?style=for-the-badge
 [contributors-url]: https://github.com/Gonxolo/ContourJ/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Gonxolo/ContourJ.svg?style=for-the-badge
