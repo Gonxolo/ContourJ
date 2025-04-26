@@ -17,6 +17,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           javadoc-branch: gh-pages
           java-distribution: zulu
-          java-version: 8.62.0.19
+          java-version: 8u332b09
           target-folder: docs/javadoc # url will be https://<username>.github.io/<repo>/docs/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven 
