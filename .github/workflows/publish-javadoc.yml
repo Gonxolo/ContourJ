@@ -21,4 +21,4 @@ jobs:
           java-version: 8.0.332+9
           target-folder: docs/javadoc # url will be https://<username>.github.io/<repo>/docs/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven
-          custom-command: javadoc -d docs/javadoc -sourcepath src/main/java -protected -javafx cl.scian
+          custom-command: javadoc -d docs/javadoc -sourcepath src/main/java -protected -javafx -subpackages cl.scian
