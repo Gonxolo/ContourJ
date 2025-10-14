@@ -37,8 +37,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 This project was made possible by:
 
-- Funding from **FONDECYT 1221696 (Mauricio Cerda)**
-- Funding from **FONDECYT 3220832 (Jorge Jara)**
+- Funding from **FONDECYT 1221696 (Mauricio Cerda Villablanca)**
+- Funding from **FONDECYT 3220832 (Jorge Jara Wilde)**
+- Funding from **FONDECYT 1211988 (Steffen Härtel Gründler)**
+- Funding from **FONDEQUIP EQM210020 (SASIBA - Universidad de Chile)**
+- Funding from **Núcleo Milenio NCN2024_068 (SELFO)**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
