@@ -1,10 +1,12 @@
 <a id="readme-top"></a>
 
+[![MIT License][license-shield]][license-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![Build and Deploy JavaDocs][javadoc-status-shield]][javadoc-status-url]
+
 
 <div align="center">
   <h1 align="center">ContourJ</h1>
@@ -57,3 +59,5 @@ This project was made possible by:
 [issues-url]: https://github.com/Gonxolo/ContourJ/issues
 [license-shield]: https://img.shields.io/github/license/Gonxolo/ContourJ.svg?style=for-the-badge
 [license-url]: https://github.com/Gonxolo/ContourJ/blob/main/LICENSE.txt
+[javadoc-status-shield]: https://img.shields.io/github/actions/workflow/status/Gonxolo/ContourJ/javadoc.yml?style=for-the-badge&label=Build%20and%20Deploy%20JavaDocs
+[javadoc-status-url]: https://github.com/Gonxolo/ContourJ/actions/workflows/javadoc.yml
