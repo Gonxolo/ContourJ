@@ -10,17 +10,21 @@
 
 <div align="center">
   <h1 align="center">ContourJ</h1>
-  <p><strong>THIS IS A WORK IN PROGRESS AND CANNOT BE USED AT THE MOMENT.</strong></p>
+  <p><strong>THIS IS A WORK IN PROGRESS. WE SUGGEST WAITING FOR A STABLE RELEASE BEFORE USE.</strong></p>
   <p align="center"> 
     A Fiji plugin that provides a GUI for the active contours model (GVF/GGVF snakes).
   </p>
+  <img src="https://github.com/Gonxolo/ContourJ/blob/master/docs/img/gui_0.1.0-dev.png" alt="ContourJ Plugin GUI">
 </div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary><strong>Table of Contents</strong></summary>
   <ol>
     <li><a href="#license">License</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contribute">Contribute</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -30,6 +34,29 @@
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- INSTALLATION -->
+
+## Installation
+<!-- TODO -->
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- USAGE -->
+
+## Usage
+
+For and explanation on how to use the plugin please refer to the <a href="https://github.com/Gonxolo/ContourJ/wiki/Quick-Start-Guide">Quick Start Guide</a> section on the <a href="https://github.com/Gonxolo/ContourJ/wiki">ContourJ Wiki
+</a>.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTE -->
+
+## Contribute
+<!-- TODO -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
