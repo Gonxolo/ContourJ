@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ContourJ - Active Contours Plugin for Fiji</title>
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --text-color: #333;
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --border-color: #e1e8ed;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background: var(--bg-color);
+      }
+      .header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        color: white;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+      .header p {
+        font-size: 1.2rem;
+        opacity: 0.95;
+      }
+      .warning-banner {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin: 2rem auto;
+        max-width: 1200px;
+        border-radius: 4px;
+      }
+      .warning-banner strong {
+        color: #856404;
+      }
+      .nav {
+        background: white;
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .nav a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+      .nav a:hover {
+        color: var(--secondary-color);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+      }
+      .badges {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+      .hero-image {
+        margin: 2rem 0;
+        text-align: center;
+      }
+      .hero-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .section {
+        background: var(--card-bg);
+        padding: 2rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      .section h2 {
+        color: var(--primary-color);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid var(--secondary-color);
+      }
+      .section ol,
+      .section ul {
+        margin-left: 2rem;
+        margin-top: 1rem;
+      }
+      .section li {
+        margin: 0.5rem 0;
+      }
+      .section a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .section a:hover {
+        text-decoration: underline;
+      }
+      .section code {
+        background: var(--bg-color);
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+      }
+      .acknowledgments {
+        background: var(--bg-color);
+      }
+      .acknowledgments ul {
+        list-style: none;
+        margin-left: 0;
+      }
+      .acknowledgments li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+      .acknowledgments li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--secondary-color);
+        font-weight: bold;
+      }
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #666;
+        margin-top: 3rem;
+      }
+      .back-to-top {
+        text-align: right;
+        margin-top: 1rem;
+      }
+      .back-to-top a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+      @media (max-width: 768px) {
+        .header h1 {
+          font-size: 2rem;
+        }
+        .container {
+          padding: 1.5rem 1rem;
+        }
+        .section {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>ContourJ</h1>
+      <p>
+        A Fiji plugin that provides a GUI for the active contours model
+        (GVF/GGVF snakes)
+      </p>
+      <div class="badges">
+        <a href="https://github.com/Gonxolo/ContourJ/blob/main/LICENSE.txt"
+          ><img
+            src="https://img.shields.io/github/license/Gonxolo/ContourJ.svg?style=for-the-badge"
+            alt="MIT License"
+        /></a>
+        <a href="https://github.com/Gonxolo/ContourJ/graphs/contributors"
+          ><img
+            src="https://img.shields.io/github/contributors/Gonxolo/ContourJ.svg?style=for-the-badge"
+            alt="Contributors"
+        /></a>
+        <a href="https://github.com/Gonxolo/ContourJ/network/members"
+          ><img
+            src="https://img.shields.io/github/forks/Gonxolo/ContourJ.svg?style=for-the-badge"
+            alt="Forks"
+        /></a>
+        <a href="https://github.com/Gonxolo/ContourJ/stargazers"
+          ><img
+            src="https://img.shields.io/github/stars/Gonxolo/ContourJ.svg?style=for-the-badge"
+            alt="Stars"
+        /></a>
+        <a href="https://github.com/Gonxolo/ContourJ/issues"
+          ><img
+            src="https://img.shields.io/github/issues/Gonxolo/ContourJ.svg?style=for-the-badge"
+            alt="Issues"
+        /></a>
+        <a
+          href="https://github.com/Gonxolo/ContourJ/actions/workflows/javadoc.yml"
+          ><img
+            src="https://img.shields.io/github/actions/workflow/status/Gonxolo/ContourJ/javadoc.yml?style=for-the-badge&label=Build%20and%20Deploy%20Site"
+            alt="Build Status"
+        /></a>
+      </div>
+    </div>
+
+    <div class="warning-banner">
+      <strong
+        >⚠️ THIS IS A WORK IN PROGRESS. WE SUGGEST WAITING FOR A STABLE RELEASE
+        BEFORE USE.</strong
+      >
+    </div>
+
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="https://github.com/Gonxolo/ContourJ">GitHub Repository</a>
+        <a href="#installation">Installation</a>
+        <a href="#usage">Usage</a>
+        <a href="#contribute">Contribute</a>
+        <a href="docs/">API Documentation</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="hero-image">
+        <img
+          src="https://github.com/Gonxolo/ContourJ/blob/master/docs/img/gui_0.1.0-dev.png?raw=true"
+          alt="ContourJ Plugin GUI"
+        />
+      </div>
+
+      <div class="section" id="license">
+        <h2>License</h2>
+        <p>
+          Distributed under the MIT License. See <code>LICENSE.txt</code> for
+          more information.
+        </p>
+        <div class="back-to-top"><a href="#top">↑ back to top</a></div>
+      </div>
+
+      <div class="section" id="installation">
+        <h2>Installation</h2>
+        <ol>
+          <li>
+            Download the latest <code>.jar</code> file from the
+            <a href="https://github.com/Gonxolo/ContourJ/releases">Releases</a>
+            page
+          </li>
+          <li>
+            Copy the <code>.jar</code> file into your Fiji plugins folder
+            (typically <code>Fiji.app/plugins/</code>)
+          </li>
+          <li>Restart Fiji</li>
+        </ol>
+        <p style="margin-top: 1rem">
+          The plugin will appear in the Fiji menu after installation.
+        </p>
+        <p>
+          <strong>Note:</strong> Make sure you have
+          <a href="https://fiji.sc/">Fiji</a> installed before proceeding with
+          the installation.
+        </p>
+        <div class="back-to-top"><a href="#top">↑ back to top</a></div>
+      </div>
+
+      <div class="section" id="usage">
+        <h2>Usage</h2>
+        <p>
+          For an explanation on how to use the plugin please refer to the
+          <a href="https://github.com/Gonxolo/ContourJ/wiki/Quick-Start-Guide"
+            >Quick Start Guide</a
+          >
+          section on the
+          <a href="https://github.com/Gonxolo/ContourJ/wiki">ContourJ Wiki</a>.
+        </p>
+        <div class="back-to-top"><a href="#top">↑ back to top</a></div>
+      </div>
+
+      <div class="section" id="contribute">
+        <h2>Contribute</h2>
+        <p>
+          Contributions are welcome! Please visit our
+          <a href="https://github.com/Gonxolo/ContourJ">GitHub repository</a> to
+          get started.
+        </p>
+        <div class="back-to-top"><a href="#top">↑ back to top</a></div>
+      </div>
+
+      <div class="section acknowledgments" id="acknowledgments">
+        <h2>Acknowledgments</h2>
+        <p>This project was made possible by:</p>
+        <ul>
+          <li>
+            Funding from
+            <strong>FONDECYT 1221696 (Mauricio Cerda Villablanca)</strong>
+          </li>
+          <li>
+            Funding from <strong>FONDECYT 3220832 (Jorge Jara Wilde)</strong>
+          </li>
+          <li>
+            Funding from
+            <strong>FONDECYT 1211988 (Steffen Härtel Gründler)</strong>
+          </li>
+          <li>
+            Funding from
+            <strong>FONDEQUIP EQM210020 (SASIBA - Universidad de Chile)</strong>
+          </li>
+          <li>
+            Funding from <strong>Núcleo Milenio NCN2024_068 (SELFO)</strong>
+          </li>
+        </ul>
+        <div class="back-to-top"><a href="#top">↑ back to top</a></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        © 2025 ContourJ |
+        <a href="https://github.com/Gonxolo/ContourJ">View on GitHub</a> |
+        <a href="docs/">API Documentation</a>
+      </p>
+    </div>
+  </body>
+</html>

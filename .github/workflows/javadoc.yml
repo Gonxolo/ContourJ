@@ -1,4 +1,4 @@
-name: Build and Deploy JavaDocs
+name: Build and Deploy Site
 
 on:
   push:
@@ -24,8 +24,14 @@ jobs:
       - name: Build JavaDoc
         run: mvn javadoc:javadoc
 
+      - name: Create deploy directory structure
+        run: |
+          mkdir -p deploy/docs
+          cp -r target/site/apidocs/* deploy/docs/
+          cp .github/pages/index.html deploy/index.html
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: target/site/apidocs
+          folder: deploy
           branch: gh-pages
