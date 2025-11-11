@@ -40,7 +40,14 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- INSTALLATION -->
 
 ## Installation
-<!-- TODO -->
+
+1. Download the latest `.jar` file from the [Releases](https://github.com/Gonxolo/ContourJ/releases) page
+2. Copy the `.jar` file into your Fiji plugins folder (typically `Fiji.app/plugins/`)
+3. Restart Fiji
+
+The plugin will appear in the Fiji menu after installation.
+
+**Note:** Make sure you have [Fiji](https://fiji.sc/) installed before proceeding with the installation.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
